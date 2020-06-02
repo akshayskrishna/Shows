@@ -25,3 +25,40 @@
 #container a {
   text-decoration: none;
 }
+
+h1 {
+  color: #ffb005;
+  font-size: large;
+  font-weight: bold;
+}
+h3 {
+  font-size: small;
+}
+
+.green {
+  color: green;
+}
+.red {
+  color: red;
+}
+
+.status {
+  color: #646464;
+  font-style: italic;
+  padding-top: 5px;
+  font-size: small;
+}
+
+.statusR {
+  color: #9aff57;
+}
+
+.statusE {
+  color: #ff5757;
+}
+
+.rating {
+  color: #d1cea0;
+  font-size: small;
+  font-weight: bold;
+}

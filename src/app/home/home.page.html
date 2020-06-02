@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Blank
+      {{ query | uppercase }}
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,12 +9,43 @@
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
+      <ion-title size="large">Shows</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+  <div>
+    <ion-searchbar
+      (search)="getDataBySearch($event.target.value)"
+      ng-model="query"
+    ></ion-searchbar>
   </div>
+
+  <ion-text>
+    <h6 style="margin-left: 20px;">
+      Search for: {{ query | uppercase }}
+    </h6>
+  </ion-text>
+
+  <ion-list>
+    <ion-item
+      *ngFor="let item of listFilter"
+      ng-show="item.show.status == 'Running'"
+    >
+      <ion-avatar slot="start">
+        <img [src]="item.show.image.original" />
+      </ion-avatar>
+      <h2 slot="end" class="rating">{{item.show.rating.average}} /10</h2>
+
+      <ion-label>
+        <h1>{{item.show.name}}</h1>
+
+        <h3>
+          {{ item.show.language }} <br />
+          {{ item.show.genres }}
+        </h3>
+
+        <div class="status">{{ item.show.status }} <br /></div>
+      </ion-label>
+    </ion-item>
+  </ion-list>
 </ion-content>
