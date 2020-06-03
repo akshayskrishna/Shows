@@ -28,6 +28,7 @@
 
   <ion-list>
     <ion-item
+      (click)="clickCheck($event, item)"
       *ngFor="let item of listFilter"
       ng-show="item.show.status == 'Running'"
     >
