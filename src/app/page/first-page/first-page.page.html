@@ -18,8 +18,8 @@
   <ion-slides *ngFor="let item of seasons">
     <ion-slide>
       <ion-card>
-        <img [src]="item.image.original" />
         <ion-card-header>
+          <img [src]="item.image.original" />
           <ion-card-subtitle
             >No. of Episodes {{item.episodeOrder}}
           </ion-card-subtitle>

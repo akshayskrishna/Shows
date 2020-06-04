@@ -29,11 +29,10 @@
   <ion-list>
     <ion-item
       (click)="clickCheck($event, item)"
-      *ngFor="let item of listFilter"
-      ng-show="item.show.status == 'Running'"
+      *ngFor="let item of testingFilter"
     >
-      <ion-avatar slot="start">
-        <img [src]="item.show.image.original" />
+      <ion-avatar slot="start"
+        ><img [src]="item.show.image.original" />
       </ion-avatar>
       <h2 slot="end" class="rating">{{item.show.rating.average}} /10</h2>
 
