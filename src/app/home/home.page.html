@@ -10,8 +10,13 @@
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Shows</ion-title>
-      <ion-button slot="end" fill="clear" shape="box">
-        <ion-icon slot="icon-only" name="home" style="color: white;"></ion-icon>
+      <ion-button
+        slot="end"
+        fill="clear"
+        shape="box"
+        (click)="onClickHomeButton()"
+      >
+        <ion-icon slot="icon-only" name="home" style="color: wh;"></ion-icon>
       </ion-button>
     </ion-toolbar>
   </ion-header>
@@ -27,19 +32,21 @@
     ></ion-searchbar>
   </div>
 
-  <ion-text>
-    <div *ngIf="query == null">
-      <h6 style="margin-left: 20px;"></h6>
-    </div>
-    <div *ngIf="query != null">
-      <h6 style="margin-left: 20px;">
-        Search for: {{ query | uppercase }}
-      </h6>
-    </div>
-  </ion-text>
+  <div>
+    <ion-text>
+      <div *ngIf="query == null">
+        <h6 style="margin-left: 20px;"></h6>
+      </div>
+      <div *ngIf="query != null">
+        <h6 style="margin-left: 20px;">
+          Search for: {{ query | uppercase }}
+        </h6>
+      </div>
+    </ion-text>
+  </div>
 
   <!--  Ion List for search reseults   -->
-  <ion-list>
+  <ion-list *ngIf="hideSearch">
     <ion-item
       (click)="openShowDetails($event, item)"
       *ngFor="let item of filteredResult"
@@ -82,4 +89,24 @@
       </ion-label>
     </ion-item>
   </ion-list>
+
+  <div *ngFor="let item of randomListGenerated">
+    <ion-card>
+      <img style="min-width: 375px;" [src]="item.image.original" />
+      <ion-card-header>
+        <ion-card-subtitle>{{item.language}}</ion-card-subtitle>
+        <ion-card-title> {{item.name}} </ion-card-title>
+        <ion-card-content> </ion-card-content>
+        <div *ngIf="item.rating.average != null">
+          {{item.rating.average}} / 10
+        </div>
+        <div *ngIf="item.rating.average == null" style="color: yellow;">
+          unrated / 10
+        </div>
+        <ion-button (click)="launchFromHome($event, item)" expand="full">
+          Show More
+        </ion-button>
+      </ion-card-header>
+    </ion-card>
+  </div>
 </ion-content>

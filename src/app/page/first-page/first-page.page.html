@@ -16,20 +16,25 @@
     <ion-toolbar>
       <ion-title size="large">{{ title }}</ion-title>
 
-      <!--
       <ion-button slot="end" fill="clear" color="danger" shape="box">
         <ion-icon slot="icon-only" name="bookmark-outline"></ion-icon>
       </ion-button>
-      <ion-buttons slot="end">
-
--->
-      <ion-buttons slot="end">
-        <ion-button fill="clear" (click)="CloseModal()">
-          Close
-        </ion-button>
-      </ion-buttons>
     </ion-toolbar>
   </ion-header>
+
+  <ion-text>
+    <h2
+      style="
+        padding-left: 20px;
+        color: #fff351;
+        font-size: x-large !important;
+        font-weight: bold;
+      "
+    >
+      Summary
+    </h2>
+    <h5 style="padding-left: 20px; padding-right: 20px;">{{cleanText}}</h5>
+  </ion-text>
 
   <div>
     <ion-slides mode="ios" pager="ios" scrollbar="ios">

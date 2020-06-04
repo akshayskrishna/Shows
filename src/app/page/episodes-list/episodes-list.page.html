@@ -46,8 +46,13 @@
         <ion-label>
           <h1>{{ item.name }}</h1>
           <h3>
-            Epsiode {{item.number}} <br />
-            Aired on {{item.airdate}}
+            Episode {{item.number}} <br />
+            <div *ngIf="item.airdate !== ''">
+              Aired on {{item.airdate}}
+            </div>
+            <div *ngIf="item.airdate == ''" style="color: #929292;">
+              Yet to be aired
+            </div>
           </h3>
         </ion-label>
       </ion-item>

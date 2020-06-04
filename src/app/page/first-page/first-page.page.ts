@@ -12,6 +12,8 @@ export class FirstPagePage implements OnInit {
   title;
   id;
   img;
+  summary;
+  cleanText: any;
   imageUrl = [];
   public heading = this.title;
   seasons: any = [];
@@ -26,13 +28,18 @@ export class FirstPagePage implements OnInit {
   ngOnInit() {
     this.seasonsData();
     this.castData();
+    this.cleanText = this.summary.replace(/<\/?[^>]+(>|$)/g, "");
+    //console.log(this.cleanText);
   }
+
+
+
 
 
   seasonsData() {
     this.api.getSeasons(this.id).subscribe((data) => {
       this.seasons = data;
-      console.log(this.seasons);
+      //console.log(this.seasons);
     });
   }
 
