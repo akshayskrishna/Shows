@@ -21,9 +21,14 @@
   </div>
 
   <ion-text>
-    <h6 style="margin-left: 20px;">
-      Search for: {{ query | uppercase }}
-    </h6>
+    <div *ngIf="query == null">
+      <h6 style="margin-left: 20px;"></h6>
+    </div>
+    <div *ngIf="query != null">
+      <h6 style="margin-left: 20px;">
+        Search for: {{ query | uppercase }}
+      </h6>
+    </div>
   </ion-text>
 
   <ion-list>

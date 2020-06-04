@@ -19,20 +19,25 @@
     <ion-slide>
       <ion-card>
         <ion-card-header>
-          <img [src]="item.image.original" />
+          <div *ngIf="item.image == null">
+            <img [src]="img" />
+          </div>
+          <div *ngIf="item.image != null">
+            <img [src]="item.image.original" />
+          </div>
           <ion-card-subtitle
-            >No. of Episodes {{item.episodeOrder}}
+            >Episode Count {{item.episodeOrder}}
           </ion-card-subtitle>
           <ion-card-title>Season {{item.number}} </ion-card-title>
           <ion-card-content>
             {{item.summary}}
           </ion-card-content>
         </ion-card-header>
-        <a target="_blank" [href]="item.url">
-          <ion-button expand="block" shape="round">
-            Season {{item.number}}
-          </ion-button>
-        </a>
+        <a target="_blank" [href]="item.url"
+          ><ion-button expand="block" shape="round"
+            >Season {{item.number}}</ion-button
+          ></a
+        >
       </ion-card>
     </ion-slide>
   </ion-slides>

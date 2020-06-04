@@ -35,7 +35,6 @@ export class HomePage {
       this.data['list'] = (data)
       this.listFilter = this.data['list'];
       //console.log(this.listFilter);
-
       this.testingFilter = this.listFilter.filter(d => d.show.image != null);
       console.log(this.testingFilter);
     });
@@ -43,12 +42,14 @@ export class HomePage {
 
   titleName: String;
   selectedId: String;
+  imageUrl: String;
   modalStructure: any = [];
 
   async clickCheck(event, item) {
     item: item;
     this.titleName = item.show.name;
     this.selectedId = item.show.id;
+    this.imageUrl = item.show.image.original;
     this.modalStructure['title'] = this.titleName;
     console.log(this.modalStructure);
     const modal = await this.modalCtrl.create({
@@ -56,6 +57,8 @@ export class HomePage {
       componentProps: {
         title: this.titleName,
         id: this.selectedId,
+        img: this.imageUrl,
+
       }
     });
     return await modal.present();
