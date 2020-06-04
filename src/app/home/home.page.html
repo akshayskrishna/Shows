@@ -89,7 +89,13 @@
       </ion-label>
     </ion-item>
   </ion-list>
-
+  <!--
+  <ion-slides [options]="slideOptsOne" #slideWithNav>
+    <ion-slide *ngFor="let item of randomListGenerated">
+      <img [src]="item.image.original" />
+    </ion-slide>
+  </ion-slides>
+-->
   <div *ngFor="let item of randomListGenerated">
     <ion-card>
       <img style="min-width: 375px;" [src]="item.image.original" />

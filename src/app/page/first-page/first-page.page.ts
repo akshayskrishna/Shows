@@ -14,6 +14,7 @@ export class FirstPagePage implements OnInit {
   img;
   summary;
   cleanText: any;
+  numberOfSeasons: any;
   imageUrl = [];
   public heading = this.title;
   seasons: any = [];
@@ -21,7 +22,6 @@ export class FirstPagePage implements OnInit {
   fltrS00: any = [];
   episodeId: any;
   castDetails: any = [];
-  castDetailsFilter: any = [];
 
   constructor(private modalCtrl: ModalController, private api: ApiService) { }
 
@@ -32,24 +32,19 @@ export class FirstPagePage implements OnInit {
     //console.log(this.cleanText);
   }
 
-
-
-
-
   seasonsData() {
     this.api.getSeasons(this.id).subscribe((data) => {
       this.seasons = data;
+      this.numberOfSeasons = this.seasons.length;
+
       //console.log(this.seasons);
     });
   }
 
   castData() {
     this.api.retrieveCast(this.id).subscribe((data) => {
-      this.castDetails = data;
-      //this.filteredResult = this.listFilter.filter(d => d.show.image != null);
-
-      this.castDetailsFilter = this.castDetails.filter(d => d.person.image != null);
-
+      const castDeets: any = data;
+      this.castDetails = castDeets.filter(d => d.person.image != null);
     })
   }
 

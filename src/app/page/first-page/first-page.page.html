@@ -23,81 +23,86 @@
   </ion-header>
 
   <ion-text>
-    <h2
-      style="
-        padding-left: 20px;
-        color: #fff351;
-        font-size: x-large !important;
-        font-weight: bold;
-      "
-    >
+    <h2 class="headingText">
       Summary
     </h2>
-    <h5 style="padding-left: 20px; padding-right: 20px;">{{cleanText}}</h5>
+    <h5 style="padding-left: 20px; padding-right: 20px;">
+      {{cleanText}} <br />
+      <br />
+    </h5>
   </ion-text>
 
   <div>
-    <ion-slides mode="ios" pager="ios" scrollbar="ios">
-      <div *ngFor="let item of castDetailsFilter">
-        <ion-slide>
-          <div>
-            <ion-card>
-              <img
-                style="max-height: 200px; max-width: 200px;"
-                [src]="item.person.image.medium"
-              />
-              <ion-card-header>
-                <ion-card-title><h1>{{item.person.name}}</h1></ion-card-title>
-              </ion-card-header>
-              <ion-card-content>
-                {{item.character.name}}
-              </ion-card-content>
-            </ion-card>
-          </div>
-        </ion-slide>
-      </div>
-    </ion-slides>
-  </div>
+    <ion-text>
+      <h2 class="headingText">
+        Seasons Details
+      </h2>
+      <h3 class="subtitleText">Number of Seasons {{numberOfSeasons}}</h3>
+    </ion-text>
 
-  <ion-slides *ngFor="let item of seasons">
-    <ion-slide>
-      <ion-card>
-        <ion-card-header>
-          <div *ngIf="item.image == null">
-            <img [src]="img" />
-          </div>
-          <div *ngIf="item.image != null">
-            <img [src]="item.image.original" />
-          </div>
-          <ion-card-subtitle
-            >Episode Count {{item.episodeOrder}}
-          </ion-card-subtitle>
-          <ion-card-title>Season {{item.number}} </ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          {{item.summary}}
-        </ion-card-content>
-        <ion-button
-          (click)="openEpisodeList($event, item)"
-          shape="round"
-          fill="outline"
-          >Episode List</ion-button
-        >
-        <ion-button
-          (click)="openEpisodeList($event, item)"
-          shape="round"
-          fill="outline"
-          >Check</ion-button
-        >
-        <ion-button shape="round" fill="outline" color="danger"
-          >Like</ion-button
-        >
-        <a target="_blank" [href]="item.url">
-          <ion-button (click)="openEpisodeList($event, item)" expand="full">
-            Season {{item.number}}</ion-button
+    <ion-slides [options]="slideOptsOne" mode="ios" #slideWithNav>
+      <ion-slide *ngFor="let item of seasons">
+        <ion-card>
+          <ion-card-header>
+            <div *ngIf="item.image == null">
+              <img [src]="img" />
+            </div>
+            <div *ngIf="item.image != null">
+              <img [src]="item.image.original" />
+            </div>
+            <ion-card-subtitle
+              >Episode Count {{item.episodeOrder}}
+            </ion-card-subtitle>
+            <ion-card-title>Season {{item.number}} </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            {{item.summary}}
+          </ion-card-content>
+          <ion-button
+            (click)="openEpisodeList($event, item)"
+            shape="round"
+            fill="outline"
+            >Episode List</ion-button
           >
-        </a>
-      </ion-card>
-    </ion-slide>
-  </ion-slides>
+          <ion-button
+            (click)="openEpisodeList($event, item)"
+            shape="round"
+            fill="outline"
+            >Check</ion-button
+          >
+          <ion-button shape="round" fill="outline" color="danger"
+            >Like</ion-button
+          >
+          <a target="_blank" [href]="item.url">
+            <ion-button (click)="openEpisodeList($event, item)" expand="full">
+              Season {{item.number}}</ion-button
+            >
+          </a>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+
+    <!-- Cast Information Part -->
+    <ion-text>
+      <h2 class="headingText">
+        Cast Information
+      </h2>
+    </ion-text>
+    <div *ngIf="castDetails != null">
+      <ion-list>
+        <ion-item *ngFor="let item of castDetails">
+          <ion-avatar>
+            <img [src]="item.person.image.medium" />
+          </ion-avatar>
+          <ion-label style="padding-left: 15px;">
+            <h1>{{item.person.name}}</h1>
+            <h3>{{item.character.name}}</h3>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </div>
+    <div *ngIf="castDetails == ''">
+      <h3 class="subtitleText">No Cast Details Available</h3>
+    </div>
+  </div>
 </ion-content>
