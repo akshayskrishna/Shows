@@ -1,5 +1,10 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-icon
+      slot="start"
+      name="chevron-back-outline"
+      (click)="CloseModal()"
+    ></ion-icon>
     <ion-title>
       Details on {{title}}
     </ion-title>
@@ -10,10 +15,44 @@
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">{{ title }}</ion-title>
+
+      <!--
+      <ion-button slot="end" fill="clear" color="danger" shape="box">
+        <ion-icon slot="icon-only" name="bookmark-outline"></ion-icon>
+      </ion-button>
+      <ion-buttons slot="end">
+
+-->
+      <ion-buttons slot="end">
+        <ion-button fill="clear" (click)="CloseModal()">
+          Close
+        </ion-button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
-  <ion-button (click)="CloseModal()">Close</ion-button>
+  <div>
+    <ion-slides mode="ios" pager="ios" scrollbar="ios">
+      <div *ngFor="let item of castDetailsFilter">
+        <ion-slide>
+          <div>
+            <ion-card>
+              <img
+                style="max-height: 200px; max-width: 200px;"
+                [src]="item.person.image.medium"
+              />
+              <ion-card-header>
+                <ion-card-title><h1>{{item.person.name}}</h1></ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                {{item.character.name}}
+              </ion-card-content>
+            </ion-card>
+          </div>
+        </ion-slide>
+      </div>
+    </ion-slides>
+  </div>
 
   <ion-slides *ngFor="let item of seasons">
     <ion-slide>
@@ -29,15 +68,30 @@
             >Episode Count {{item.episodeOrder}}
           </ion-card-subtitle>
           <ion-card-title>Season {{item.number}} </ion-card-title>
-          <ion-card-content>
-            {{item.summary}}
-          </ion-card-content>
         </ion-card-header>
-        <a target="_blank" [href]="item.url"
-          ><ion-button expand="block" shape="round"
-            >Season {{item.number}}</ion-button
-          ></a
+        <ion-card-content>
+          {{item.summary}}
+        </ion-card-content>
+        <ion-button
+          (click)="openEpisodeList($event, item)"
+          shape="round"
+          fill="outline"
+          >Episode List</ion-button
         >
+        <ion-button
+          (click)="openEpisodeList($event, item)"
+          shape="round"
+          fill="outline"
+          >Check</ion-button
+        >
+        <ion-button shape="round" fill="outline" color="danger"
+          >Like</ion-button
+        >
+        <a target="_blank" [href]="item.url">
+          <ion-button (click)="openEpisodeList($event, item)" expand="full">
+            Season {{item.number}}</ion-button
+          >
+        </a>
       </ion-card>
     </ion-slide>
   </ion-slides>
