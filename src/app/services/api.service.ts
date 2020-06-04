@@ -21,4 +21,11 @@ export class ApiService {
     return this.http.get(url);
   }
 
+  getSeasons(id) {
+    const url = "http://api.tvmaze.com/shows/" + id + "/seasons";
+    return this.http.get(url);
+  }
+
 }
+
+//http://api.tvmaze.com/shows/47900/seasons
