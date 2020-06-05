@@ -27,7 +27,7 @@
       Summary
     </h2>
     <h5 style="padding-left: 20px; padding-right: 20px;">
-      {{cleanText}} <br />
+      {{summary}} <br />
       <br />
     </h5>
   </ion-text>
@@ -37,7 +37,10 @@
       <h2 class="headingText">
         Seasons Details
       </h2>
-      <h3 class="subtitleText">Number of Seasons {{numberOfSeasons}}</h3>
+      <p class="subtitleText" style="padding-top: -10px !important;">
+        Total Seasons: {{numberOfSeasons}}
+      </p>
+      <p slot="end" class="subtitleText">Swipe -></p>
     </ion-text>
 
     <ion-slides [options]="slideOptsOne" mode="ios" #slideWithNav>
@@ -55,9 +58,7 @@
             </ion-card-subtitle>
             <ion-card-title>Season {{item.number}} </ion-card-title>
           </ion-card-header>
-          <ion-card-content>
-            {{item.summary}}
-          </ion-card-content>
+
           <ion-button
             (click)="openEpisodeList($event, item)"
             shape="round"
@@ -73,11 +74,6 @@
           <ion-button shape="round" fill="outline" color="danger"
             >Like</ion-button
           >
-          <a target="_blank" [href]="item.url">
-            <ion-button (click)="openEpisodeList($event, item)" expand="full">
-              Season {{item.number}}</ion-button
-            >
-          </a>
         </ion-card>
       </ion-slide>
     </ion-slides>
@@ -88,19 +84,25 @@
         Cast Information
       </h2>
     </ion-text>
+
+    <!--If Cast info is present-->
     <div *ngIf="castDetails != null">
       <ion-list>
-        <ion-item *ngFor="let item of castDetails">
+        <ion-item button *ngFor="let item of castDetails">
           <ion-avatar>
             <img [src]="item.person.image.medium" />
           </ion-avatar>
           <ion-label style="padding-left: 15px;">
-            <h1>{{item.person.name}}</h1>
-            <h3>{{item.character.name}}</h3>
+            <h2>{{item.person.name}}</h2>
+            <h3 style="color: #707070; font-size: small; font-weight: bold;">
+              {{item.character.name}}
+            </h3>
           </ion-label>
         </ion-item>
       </ion-list>
     </div>
+
+    <!--If Cast info is absent-->
     <div *ngIf="castDetails == ''">
       <h3 class="subtitleText">No Cast Details Available</h3>
     </div>

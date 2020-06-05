@@ -28,8 +28,7 @@ export class FirstPagePage implements OnInit {
   ngOnInit() {
     this.seasonsData();
     this.castData();
-    this.cleanText = this.summary.replace(/<\/?[^>]+(>|$)/g, "");
-    //console.log(this.cleanText);
+    this.checkForSummary();
   }
 
   seasonsData() {
@@ -55,6 +54,7 @@ export class FirstPagePage implements OnInit {
   async openEpisodeList(event, item) {
     item: item;
     this.episodeId = item.id;
+    const summary: any = item.summary;
     const modal = await this.modalCtrl.create({
       component: EpisodesListPage,
       componentProps: {
@@ -62,9 +62,20 @@ export class FirstPagePage implements OnInit {
         seasonNo: item.number,
         title: this.title,
         img: this.img,
+        summary: summary,
+        showId: this.id,
       }
     });
     return await modal.present();
+  }
+
+  checkForSummary() {
+    if (this.summary == null) {
+      this.summary = 'No Summary Available';
+    }
+    else {
+      this.summary = this.summary.replace(/<\/?[^>]+(>|$)/g, "");
+    }
   }
 
 }

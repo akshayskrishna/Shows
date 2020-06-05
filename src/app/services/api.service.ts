@@ -41,8 +41,17 @@ export class ApiService {
     return this.http.get(url);
   }
 
+  getSpecificEpisode(showid, seasonNo, episodeNo) {
+    const url = "https://api.tvmaze.com/shows/" + showid + "/episodebynumber?season=" + seasonNo + "&number=" + episodeNo;
+    return this.http.get(url);
+  }
+
+
+
 }
 
 //http://api.tvmaze.com/shows/47900/seasons
 //http://api.tvmaze.com/seasons/1/episodes
 //http://api.tvmaze.com/shows/2/cast
+
+//http://api.tvmaze.com/shows/1/episodebynumber?season=1&number=1

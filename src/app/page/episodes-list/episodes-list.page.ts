@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, NavController } from '@ionic/angular';
+import { EpisodeDetailsPage } from '../episode-details/episode-details.page';
 
 @Component({
   selector: 'app-episodes-list',
@@ -12,12 +13,16 @@ export class EpisodesListPage implements OnInit {
   title;
   img;
   seasonNo;
+  summary;
+  showId;
   episodes: any = [];
 
-  constructor(private api: ApiService, private modalcltr: ModalController) { }
+  constructor(private api: ApiService, private modalcltr: ModalController, private navCtrl: NavController) { }
 
   ngOnInit() {
     this.episodeListData();
+    this.checkForSummary();
+
   }
 
   CloseModal() { this.modalcltr.dismiss(); }
@@ -30,5 +35,33 @@ export class EpisodesListPage implements OnInit {
     });
   }
 
+  checkForSummary() {
+    if (this.summary == null) {
+      this.summary = 'No Season Bio Available';
+    }
+    else {
+      this.summary = this.summary.replace(/<\/?[^>]+(>|$)/g, "");
+    }
+  }
+
+  async episodeDetails(event, item) {
+    item: item;
+    const url: any = item._links.self.href;
+    const sNo: any = item.season;
+    const eNo: any = item.number;
+
+    const modal = await this.modalcltr.create({
+      component: EpisodeDetailsPage,
+      componentProps: {
+        id: this.id,
+        seasonNo: sNo,
+        episodeNo: eNo,
+        stockImg: this.img,
+        showId: this.showId,
+      }
+    });
+    return await modal.present();
+
+  }
 
 }
