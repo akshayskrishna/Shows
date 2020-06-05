@@ -1,0 +1,64 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-icon
+      slot="start"
+      name="chevron-back-outline"
+      (click)="CloseModal()"
+    ></ion-icon>
+    <ion-title>
+      {{title}} Season {{ seasonNo }}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">{{ title }}</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <img [src]="img" style="min-width: 375px;" />
+  <ion-list-header>
+    <ion-label>Season {{seasonNo}} </ion-label>
+  </ion-list-header>
+
+  <h5 style="padding-left: 20px; padding-right: 20px;">{{summary}}</h5>
+
+  <div *ngFor="let item of episodes">
+    <ion-list>
+      <ion-item button (click)="episodeDetails($event, item)">
+        <!-- ngIf to fix if API has no thumbnail -->
+        <div>
+          <div *ngIf="item.image == null">
+            <ion-avatar slot="start">
+              <ion-thumbnail>
+                <img [src]="img" />
+              </ion-thumbnail>
+            </ion-avatar>
+          </div>
+
+          <div *ngIf="item.image != null">
+            <ion-avatar slot="start">
+              <ion-thumbnail>
+                <img [src]="item.image.original" />
+              </ion-thumbnail>
+            </ion-avatar>
+          </div>
+        </div>
+
+        <ion-label>
+          <h1>{{ item.name }}</h1>
+          <h3>
+            Episode {{item.number}} <br />
+            <div *ngIf="item.airdate !== ''">
+              Aired on {{item.airdate}}
+            </div>
+            <div *ngIf="item.airdate == ''" style="color: #929292;">
+              Yet to be aired
+            </div>
+          </h3>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

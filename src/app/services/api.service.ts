@@ -6,12 +6,12 @@ import { HttpClient } from '@angular/common/http'
 })
 export class ApiService {
 
-  public baseUrl: any = "http://api.tvmaze.com/search/shows?q=:";
+  public baseUrl: any = "https://api.tvmaze.com/search/shows?q=:";
 
   constructor(private http: HttpClient) { }
 
   getData() {
-    const url = "http://api.tvmaze.com/search/shows?q=girls";
+    const url = "https://api.tvmaze.com/search/shows?q=girls";
     return this.http.get(url);
   }
 
@@ -22,10 +22,36 @@ export class ApiService {
   }
 
   getSeasons(id) {
-    const url = "http://api.tvmaze.com/shows/" + id + "/seasons";
+    const url = "https://api.tvmaze.com/shows/" + id + "/seasons";
     return this.http.get(url);
   }
+
+  getEpisodes(id) {
+    const url = "https://api.tvmaze.com/seasons/" + id + "/episodes";
+    return this.http.get(url);
+  }
+
+  retrieveCast(id) {
+    const url = "https://api.tvmaze.com/shows/" + id + "/cast";
+    return this.http.get(url);
+  }
+
+  getHomePageData(id) {
+    const url = "https://api.tvmaze.com/shows?page=" + id;
+    return this.http.get(url);
+  }
+
+  getSpecificEpisode(showid, seasonNo, episodeNo) {
+    const url = "https://api.tvmaze.com/shows/" + showid + "/episodebynumber?season=" + seasonNo + "&number=" + episodeNo;
+    return this.http.get(url);
+  }
+
+
 
 }
 
 //http://api.tvmaze.com/shows/47900/seasons
+//http://api.tvmaze.com/seasons/1/episodes
+//http://api.tvmaze.com/shows/2/cast
+
+//http://api.tvmaze.com/shows/1/episodebynumber?season=1&number=1

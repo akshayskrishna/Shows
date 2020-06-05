@@ -10,36 +10,57 @@
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">Shows</ion-title>
+      <ion-button
+        slot="end"
+        fill="clear"
+        shape="box"
+        (click)="onClickHomeButton()"
+      >
+        <ion-icon slot="icon-only" name="home" style="color: wh;"></ion-icon>
+      </ion-button>
     </ion-toolbar>
   </ion-header>
 
   <div>
     <ion-searchbar
+      animated
+      showCancelButton="focus"
+      cancelButtonText="Cancel"
+      placeholder="Search for SHOWS"
       (search)="getDataBySearch($event.target.value)"
       ng-model="query"
     ></ion-searchbar>
   </div>
 
-  <ion-text>
-    <div *ngIf="query == null">
-      <h6 style="margin-left: 20px;"></h6>
-    </div>
-    <div *ngIf="query != null">
-      <h6 style="margin-left: 20px;">
-        Search for: {{ query | uppercase }}
-      </h6>
-    </div>
-  </ion-text>
+  <div>
+    <ion-text>
+      <div *ngIf="query == null">
+        <h6 style="margin-left: 20px;"></h6>
+      </div>
+      <div *ngIf="query != null">
+        <h6 style="margin-left: 20px;">
+          Search for: {{ query | uppercase }}
+        </h6>
+      </div>
+    </ion-text>
+  </div>
 
-  <ion-list>
+  <!--  Ion List for search reseults   -->
+  <ion-list *ngIf="hideSearch">
     <ion-item
-      (click)="clickCheck($event, item)"
-      *ngFor="let item of testingFilter"
+      (click)="openShowDetails($event, item)"
+      *ngFor="let item of filteredResult"
     >
+      <!--  Ion List Header   -->
       <ion-avatar slot="start"
         ><img [src]="item.show.image.original" />
       </ion-avatar>
-      <h2 slot="end" class="rating">{{item.show.rating.average}} /10</h2>
+      <h2 slot="end" class="rating" *ngIf="item.show.rating.average == null">
+        --/10
+      </h2>
+      <h2 slot="end" class="rating" *ngIf="item.show.rating.average != null">
+        {{item.show.rating.average}}/10
+      </h2>
 
       <ion-label>
         <h1>{{item.show.name}}</h1>
@@ -48,9 +69,50 @@
           {{ item.show.language }} <br />
           {{ item.show.genres }}
         </h3>
-
-        <div class="status">{{ item.show.status }} <br /></div>
+        <div>
+          <div *ngIf="item.show.status === 'Running'" class="run">
+            {{ item.show.status }} <br />
+          </div>
+          <div *ngIf="item.show.status === 'Ended'" class="ended">
+            {{ item.show.status }} <br />
+          </div>
+          <div *ngIf="item.show.status === 'In Development'" class="inDev">
+            {{ item.show.status }} <br />
+          </div>
+          <div
+            *ngIf="item.show.status != 'Running' && item.show.status !=  'Ended' && item.show.status !=  'In Development'"
+            class="otherStatus"
+          >
+            {{ item.show.status }} <br />
+          </div>
+        </div>
       </ion-label>
     </ion-item>
   </ion-list>
+  <!--
+  <ion-slides [options]="slideOptsOne" #slideWithNav>
+    <ion-slide *ngFor="let item of randomListGenerated">
+      <img [src]="item.image.original" />
+    </ion-slide>
+  </ion-slides>
+-->
+  <div *ngFor="let item of randomListGenerated">
+    <ion-card>
+      <img style="min-width: 375px;" [src]="item.image.original" />
+      <ion-card-header>
+        <ion-card-subtitle>{{item.language}}</ion-card-subtitle>
+        <ion-card-title> {{item.name}} </ion-card-title>
+        <ion-card-content> </ion-card-content>
+        <div *ngIf="item.rating.average != null">
+          {{item.rating.average}} / 10
+        </div>
+        <div *ngIf="item.rating.average == null" style="color: yellow;">
+          unrated / 10
+        </div>
+        <ion-button (click)="launchFromHome($event, item)" expand="full">
+          Show More
+        </ion-button>
+      </ion-card-header>
+    </ion-card>
+  </div>
 </ion-content>
