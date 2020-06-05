@@ -14,6 +14,7 @@ export class EpisodesListPage implements OnInit {
   img;
   seasonNo;
   summary;
+  showId;
   episodes: any = [];
 
   constructor(private api: ApiService, private modalcltr: ModalController, private navCtrl: NavController) { }
@@ -46,48 +47,21 @@ export class EpisodesListPage implements OnInit {
   async episodeDetails(event, item) {
     item: item;
     const url: any = item._links.self.href;
-
-    //this.navCtrl.navigateRoot('/episodeDetails')
+    const sNo: any = item.season;
+    const eNo: any = item.number;
 
     const modal = await this.modalcltr.create({
       component: EpisodeDetailsPage,
       componentProps: {
-        url: url,
+        id: this.id,
+        seasonNo: sNo,
+        episodeNo: eNo,
         stockImg: this.img,
+        showId: this.showId,
       }
     });
-
     return await modal.present();
 
   }
-
-  // async episodeDetails(event, item) {
-  //   item: item;
-  //   const summary: any = item.summary;
-  //   const image: any = item.image.original;
-  //   const testImage: any = item.image;
-  //   const name: any = item.name;
-  //   const season: any = item.season;
-  //   const episode: any = item.number;
-  //   const aired: any = item.airdate;
-  //   const url: any = item.url;
-  //   const modal = await this.modalcltr.create({
-  //     component: EpisodeDetailsPage,
-  //     componentProps: {
-  //       //newImage: image,
-  //       summary: summary,
-  //       name: name,
-  //       seasonNo: season,
-  //       episodeNo: episode,
-  //       aired: aired,
-  //       url: url,
-  //       //testImg: testImage,
-  //       stockImg: this.img,
-  //     }
-  //   });
-
-  //   return await modal.present();
-
-  // }
 
 }

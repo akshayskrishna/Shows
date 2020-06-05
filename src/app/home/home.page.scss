@@ -71,3 +71,64 @@ h3 {
   padding-top: 5px;
   font-size: small;
 }
+
+.randomGenCard {
+  position: relative;
+  text-align: center;
+  margin-bottom: 30px;
+}
+.card-title {
+  position: absolute;
+  top: 36%;
+  font-size: 2em;
+  width: 100%;
+  font-weight: bold;
+  color: #fff;
+  margin-top: 250px;
+  z-index: 5;
+}
+
+.card-subtitle {
+  font-size: 1em;
+  position: absolute;
+  top: 52%;
+  width: 100%;
+  color: #fff;
+  margin-top: 200px;
+  margin-bottom: 20px;
+  z-index: 3;
+}
+
+.card-rating {
+  font-size: medium;
+  position: absolute;
+  font-weight: bold;
+  top: 52%;
+  width: 100%;
+  color: rgb(255, 230, 0);
+  margin-top: 100px;
+  margin-left: 0px;
+  z-index: 4;
+}
+
+.gradientLayer {
+  position: fixed;
+  top: 0%;
+  bottom: 0%;
+  left: 0%;
+  right: 0%;
+  height: 100%;
+  width: 100%;
+  z-index: 2;
+  display: block;
+  min-height: 562.5px;
+}
+
+.overlay {
+  position: absolute;
+  top: 0%;
+  bottom: 0%;
+  left: 0%;
+  right: 0%;
+  min-height: 562.5px;
+}

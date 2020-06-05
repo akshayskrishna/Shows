@@ -8,9 +8,11 @@ import { ApiService } from 'src/app/services/api.service';
   styleUrls: ['./episode-details.page.scss'],
 })
 export class EpisodeDetailsPage implements OnInit {
-
-  url;
+  id;
+  seasonNo;
+  episodeNo;
   stockImg;
+  showId;
   episodeResponse: any = [];
 
   constructor(private modalcltr: ModalController, private api: ApiService) { }
@@ -19,15 +21,12 @@ export class EpisodeDetailsPage implements OnInit {
     this.getData();
   }
 
-
   getData() {
-    this.api.getSpecificEpisode(this.url).subscribe((data) => {
+    this.api.getSpecificEpisode(this.showId, this.seasonNo, this.episodeNo).subscribe((data) => {
       const tempHolder: any = data;
       this.episodeResponse.push(tempHolder);
-      //console.log(this.episodeResponse[0].name);
+      console.log(this.episodeResponse);
     })
-
   }
   CloseModal() { this.modalcltr.dismiss(); }
-
 }

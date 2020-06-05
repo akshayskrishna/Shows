@@ -63,6 +63,7 @@ export class FirstPagePage implements OnInit {
         title: this.title,
         img: this.img,
         summary: summary,
+        showId: this.id,
       }
     });
     return await modal.present();
