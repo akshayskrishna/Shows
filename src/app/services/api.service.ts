@@ -41,6 +41,10 @@ export class ApiService {
     return this.http.get(url);
   }
 
+  getSpecificEpisode(url) {
+    return this.http.get(url);
+  }
+
 }
 
 //http://api.tvmaze.com/shows/47900/seasons

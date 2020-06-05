@@ -1,0 +1,53 @@
+<div *ngFor="let item of episodeResponse">
+  <ion-header [translucent]="true">
+    <ion-toolbar>
+      <ion-icon
+        slot="start"
+        name="chevron-back-outline"
+        (click)="CloseModal()"
+      ></ion-icon>
+      <ion-title> {{item.name}} </ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <!--Episode Page Cover Picture-->
+  <div>
+    <div *ngIf="item.image == null">
+      <img style="max-height: 210px; min-width: 375px;" [src]="stockImg" />
+    </div>
+    <div *ngIf="item.image != null">
+      <img [src]="item.image.original" />
+    </div>
+  </div>
+
+  <ion-content>
+    <ion-text>
+      <!--Heading Part-->
+      <div>
+        <h1>{{item.name}}</h1>
+        <h2 style="margin-top: -10px;">
+          Season {{item.season}} Episode {{item.number}}
+        </h2>
+      </div>
+
+      <!--Summary of the episode looped with *ngIf directive-->
+      <div>
+        <div *ngIf="item.summary != null">
+          <p style="padding-left: 15px; padding-right: 15px;">
+            {{item.summary}}
+          </p>
+        </div>
+        <div *ngIf="item.summary == null">
+          <p style="padding-left: 15px; padding-right: 15px; color: #707070;">
+            No Data Available
+          </p>
+        </div>
+        <div *ngIf="item.summary == ''">
+          <p style="padding-left: 15px; padding-right: 15px; color: #707070;">
+            No Data Available
+          </p>
+        </div>
+      </div>
+    </ion-text>
+  </ion-content>
+</div>

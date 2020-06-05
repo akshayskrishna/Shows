@@ -21,9 +21,12 @@
   <ion-list-header>
     <ion-label>Season {{seasonNo}} </ion-label>
   </ion-list-header>
+
+  <h5 style="padding-left: 20px; padding-right: 20px;">{{summary}}</h5>
+
   <div *ngFor="let item of episodes">
     <ion-list>
-      <ion-item button>
+      <ion-item button (click)="episodeDetails($event, item)">
         <!-- ngIf to fix if API has no thumbnail -->
         <div>
           <div *ngIf="item.image == null">

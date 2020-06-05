@@ -27,7 +27,7 @@
       Summary
     </h2>
     <h5 style="padding-left: 20px; padding-right: 20px;">
-      {{cleanText}} <br />
+      {{summary}} <br />
       <br />
     </h5>
   </ion-text>
@@ -37,7 +37,7 @@
       <h2 class="headingText">
         Seasons Details
       </h2>
-      <h3 class="subtitleText">Number of Seasons {{numberOfSeasons}}</h3>
+      <p class="subtitleText">Number of Seasons {{numberOfSeasons}}</p>
     </ion-text>
 
     <ion-slides [options]="slideOptsOne" mode="ios" #slideWithNav>
@@ -55,9 +55,7 @@
             </ion-card-subtitle>
             <ion-card-title>Season {{item.number}} </ion-card-title>
           </ion-card-header>
-          <ion-card-content>
-            {{item.summary}}
-          </ion-card-content>
+          <ion-card-content> </ion-card-content>
           <ion-button
             (click)="openEpisodeList($event, item)"
             shape="round"
