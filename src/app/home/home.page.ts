@@ -60,6 +60,8 @@ export class HomePage {
   }
   randomListGenerated: any = [];
 
+
+
   onClickHomeButton() {
     this.hideResults();
     this.getRandomSuggestion();

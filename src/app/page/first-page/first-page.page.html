@@ -16,9 +16,9 @@
     <ion-toolbar>
       <ion-title size="large">{{ title }}</ion-title>
 
-      <ion-button slot="end" fill="clear" color="danger" shape="box">
+      <!-- <ion-button slot="end" fill="clear" color="danger" shape="box">
         <ion-icon slot="icon-only" name="bookmark-outline"></ion-icon>
-      </ion-button>
+      </ion-button> -->
     </ion-toolbar>
   </ion-header>
 
@@ -26,64 +26,39 @@
     <h2 class="headingText">
       Summary
     </h2>
-    <h6
-      style="
-        padding-left: 20px;
-        padding-right: 20px;
-        font-size: medium;
-        color: #bbbbbb;
-      "
-    >
+    <h6 class="summary">
       {{summary}} <br />
       <br />
     </h6>
   </ion-text>
 
   <div>
-    <ion-text>
-      <h2 class="headingText">
-        Seasons Details
-      </h2>
-      <p class="subtitleText" style="padding-top: -10px !important;">
-        Total Seasons: {{numberOfSeasons}}
-      </p>
-      <p slot="end" class="subtitleText">Swipe -></p>
-    </ion-text>
-
-    <ion-slides [options]="slideOptsOne" mode="ios" #slideWithNav>
-      <ion-slide *ngFor="let item of seasons">
-        <ion-card>
-          <ion-card-header>
+    <div class="headingText">Seasons Details</div>
+    <div>
+      <div class="subtitleText">Total Seasons: {{numberOfSeasons}}</div>
+      <ion-slides [options]="sliderConfig">
+        <ion-slide *ngFor="let item of seasons">
+          <ion-card button (click)="openEpisodeList($event, item)">
+            <div class="seasonNoInCard">
+              Season {{item.number}}
+            </div>
+            <!-- <ion-card-content> -->
+            <!--Replace if season image doesn't exist-->
             <div *ngIf="item.image == null">
               <img [src]="img" />
             </div>
+            <!--Original season image-->
             <div *ngIf="item.image != null">
-              <img [src]="item.image.original" />
+              <img
+                style="min-width: 150px; padding: 0;"
+                [src]="item.image.medium"
+              />
             </div>
-            <ion-card-subtitle
-              >Episode Count {{item.episodeOrder}}
-            </ion-card-subtitle>
-            <ion-card-title>Season {{item.number}} </ion-card-title>
-          </ion-card-header>
-
-          <ion-button
-            (click)="openEpisodeList($event, item)"
-            shape="round"
-            fill="outline"
-            >Episode List</ion-button
-          >
-          <ion-button
-            (click)="openEpisodeList($event, item)"
-            shape="round"
-            fill="outline"
-            >Check</ion-button
-          >
-          <ion-button shape="round" fill="outline" color="danger"
-            >Like</ion-button
-          >
-        </ion-card>
-      </ion-slide>
-    </ion-slides>
+            <!-- </ion-card-content> -->
+          </ion-card>
+        </ion-slide>
+      </ion-slides>
+    </div>
 
     <!-- Cast Information Part -->
     <ion-text>

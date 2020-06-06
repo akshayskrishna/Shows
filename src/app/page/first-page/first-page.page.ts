@@ -23,12 +23,20 @@ export class FirstPagePage implements OnInit {
   episodeId: any;
   castDetails: any = [];
 
+
   constructor(private modalCtrl: ModalController, private api: ApiService) { }
 
   ngOnInit() {
     this.seasonsData();
     this.castData();
     this.checkForSummary();
+  }
+
+  sliderConfig = {
+    spaceBetween: 3,
+    centeredSlides: true,
+    slidesPerView: 2.1
+
   }
 
   seasonsData() {
