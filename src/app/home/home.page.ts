@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { FirstPagePage } from '../page/first-page/first-page.page';
 import { ModalController } from '@ionic/angular';
+import { Genre } from '../home/genre'
 
 
 
@@ -15,6 +16,7 @@ import { ModalController } from '@ionic/angular';
 
 export class HomePage {
 
+
   searchResult: any = [];
   integer: any;
   usaShows: any = [];
@@ -22,8 +24,7 @@ export class HomePage {
   hideSearch: boolean = true;
   random: any = [];
   filteredDrama: any = [];
-
-  genres = require('../home/genre.json');
+  genre: any = Genre;
 
   constructor(private api: ApiService, private modalCtrl: ModalController) { }
 
@@ -31,6 +32,7 @@ export class HomePage {
     this.randomSuggestion();
     this.randomDisplay();
     this.getAllData();
+
 
   }
   randomConfig = {

@@ -102,7 +102,7 @@
 
     <!--Genre Selector-->
     <ion-slides class="genreSlides" [options]="genreConfig">
-      <ion-slide style="margin-left: 15px;" (click)="genreSelector($event, item)" *ngFor="let item of genres">
+      <ion-slide style="margin-left: 15px;" (click)="genreSelector($event, item)" *ngFor="let item of genre">
         <div><img class="genreImage" [src]="item.image" /></div>
         <div class="genreOverlay"><img /></div>
         <div class="genreTitle">{{item.name}}</div>
