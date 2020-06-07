@@ -95,64 +95,110 @@ h3 {
   z-index: 0;
 }
 
-.overlayColor {
+
+.randomCardImage {
+  width: 300px;
+  height: 200px;
+  z-index: -1;
+  max-height: 200px;
+  min-height: 200px;
+}
+
+
+.randomCardTitle {
+  color: #ffffff;
+  font-size: small;
+  z-index: 2;
+}
+
+.genreSlides {
+  padding-top: 25px;
+  background-color: #242424;
+  padding-bottom: 25px;
+}
+
+.genreImage {
+  width: 200px;
+  height: 100px;
+  z-index: -1;
+}
+
+.genreOverlay {
+  width: 200px;
+  height: 110px;
   position: absolute;
   text-align: center;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
   top: 0%;
   bottom: 0%;
   left: 0%;
   right: 0%;
-  height: 100%;
-  width: 100%;
   display: block;
-  min-height: 562.5px;
-  background-color: rgb(0, 0, 0);
-  opacity: 0.4;
+  background-color: #ffffff10;
   z-index: 0;
 }
 
-.cardImage {
-  height: 537px;
-  width: 375px;
-  z-index: -1;
-}
-
-.cardTitle {
-  z-index: 2;
+.genreTitle {
   position: absolute;
-  bottom: 80px;
-  width: 100%;
   text-align: center;
-  font-size: 2em;
-  font-weight: bold;
-  color: #ffffff;
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-.cardRating {
+  width: 100%;
+  top: 45px;
   z-index: 1;
-  position: absolute;
-  top: 0px;
-  width: 100%;
-  text-align: center;
-  color: rgb(255, 230, 0);
-  background-color: rgba(0, 0, 0, 0.781);
-  font-size: medium;
   font-weight: bold;
-  padding-top: 10px;
-  padding-bottom: 10px;
+  color: #000000;
 }
 
-.cardLanguage {
+.listTemplate {
+  width: 373px;
+  height: 240px;
+}
+
+.listBg {
   position: absolute;
-  text-align: center;
+  width: 100%;
+  top: 40px;
+  height: 200px;
+  right: 10px;
+  background-color: #1a1a1a;
+  border-radius: 5px;
+}
+
+.listImg {
+  position: absolute;
+  width: 145px;
+  height: 200px;
+  min-height: 200px;
+  left: 25px;
+  bottom: 40px;
+}
+
+.listTitle {
+  position: absolute;
+  left: 190px;
+  padding-right: 25px;
+  top: 80px;
   font-weight: bold;
   font-size: medium;
-  padding-bottom: 10px;
-  padding-top: 10px;
-  width: 100%;
-  bottom: 0px;
-  background-color: rgba(255, 255, 255, 0.76);
-  color: #000000;
+}
+
+.listRating {
+  position: absolute;
+  left: 190px;
+  padding-right: 25px;
+  top: 150px;
+  color: rgb(238, 238, 41);
+  font-weight: bold;
+}
+
+.listSubtitle {
+  position: absolute;
+  left: 190px;
+  padding-right: 25px;
+  right: 10px;
+  bottom: 20px;
+  color: rgb(230, 230, 230);
+  font-size: small;
 }

@@ -46,6 +46,10 @@ export class ApiService {
     return this.http.get(url);
   }
 
+  fullSchedule() {
+    const url = "https://api.tvmaze.com/schedule/full";
+    return this.http.get(url);
+  }
 
 
 }

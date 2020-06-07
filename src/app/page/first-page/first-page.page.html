@@ -1,10 +1,6 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-icon
-      slot="start"
-      name="chevron-back-outline"
-      (click)="CloseModal()"
-    ></ion-icon>
+    <ion-icon slot="start" name="chevron-back-outline" (click)="CloseModal()"></ion-icon>
     <ion-title>
       Details on {{title}}
     </ion-title>
@@ -36,6 +32,7 @@
     <div class="headingText">Seasons Details</div>
     <div>
       <div class="subtitleText">Total Seasons: {{numberOfSeasons}}</div>
+
       <ion-slides [options]="sliderConfig">
         <ion-slide *ngFor="let item of seasons">
           <ion-card button (click)="openEpisodeList($event, item)">
@@ -49,10 +46,13 @@
             </div>
             <!--Original season image-->
             <div *ngIf="item.image != null">
-              <img
-                style="min-width: 150px; padding: 0;"
-                [src]="item.image.medium"
-              />
+              <div style="
+                  z-index: 2;
+                  background-color: rgba(250, 235, 215, 0.856);
+                ">
+                <img />
+              </div>
+              <img style="min-width: 150px; padding: 0;" [src]="item.image.medium" />
             </div>
             <!-- </ion-card-content> -->
           </ion-card>

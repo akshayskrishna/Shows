@@ -12,11 +12,7 @@
     <ion-toolbar>
       <ion-title size="large">Shows</ion-title>
       <ion-button slot="end" fill="clear" (click)="onClickHomeButton()">
-        <ion-icon
-          slot="icon-only"
-          name="refresh-outline"
-          style="color: white;"
-        ></ion-icon>
+        <ion-icon slot="icon-only" name="refresh-outline" style="color: white;"></ion-icon>
       </ion-button>
     </ion-toolbar>
   </ion-header>
@@ -24,14 +20,8 @@
   <div style="background-color: #000000 !important;">
     <!--Searchbar-->
     <div>
-      <ion-searchbar
-        animated
-        showCancelButton="focus"
-        cancelButtonText="Cancel"
-        placeholder="Search"
-        (search)="getDataBySearch($event.target.value)"
-        ng-model="query"
-      ></ion-searchbar>
+      <ion-searchbar animated showCancelButton="focus" cancelButtonText="Cancel" placeholder="Search"
+        (search)="getDataBySearch($event.target.value)" ng-model="query"></ion-searchbar>
     </div>
 
     <!--Search For Text show up-->
@@ -50,70 +40,86 @@
 
     <!--  Ion List for search reseults   -->
     <ion-list *ngIf="hideSearch">
-      <ion-item
-        (click)="openShowDetails($event, item)"
-        *ngFor="let item of filteredResult"
-      >
+      <ion-item (click)="openShowDetails($event, item)" *ngFor="let item of searchResult">
+
         <!--  Ion List Header   -->
-        <ion-avatar slot="start"
-          ><img [src]="item.show.image.original" />
-        </ion-avatar>
-        <h2 slot="end" class="rating" *ngIf="item.show.rating.average == null">
-          --/10
-        </h2>
-        <h2 slot="end" class="rating" *ngIf="item.show.rating.average != null">
-          {{item.show.rating.average}}/10
-        </h2>
+        <ion-avatar slot="start"><img [src]="item.show.image.original" /></ion-avatar>
+        <h2 slot="end" class="rating" *ngIf="item.show.rating.average == null">--/10</h2>
+        <h2 slot="end" class="rating" *ngIf="item.show.rating.average != null">{{item.show.rating.average}}/10</h2>
 
         <ion-label>
           <h1>{{item.show.name}}</h1>
-
-          <h3>
-            {{ item.show.language }} <br />
-            {{ item.show.genres }}
-          </h3>
+          <h3>{{ item.show.language }} <br />{{ item.show.genres }}</h3>
           <div>
-            <div *ngIf="item.show.status === 'Running'" class="run">
-              {{ item.show.status }} <br />
-            </div>
-            <div *ngIf="item.show.status === 'Ended'" class="ended">
-              {{ item.show.status }} <br />
-            </div>
-            <div *ngIf="item.show.status === 'In Development'" class="inDev">
-              {{ item.show.status }} <br />
-            </div>
+            <div *ngIf="item.show.status === 'Running'" class="run">{{ item.show.status }} <br /></div>
+            <div *ngIf="item.show.status === 'Ended'" class="ended">{{ item.show.status }} <br /></div>
+            <div *ngIf="item.show.status === 'In Development'" class="inDev">{{ item.show.status }} <br /></div>
             <div
               *ngIf="item.show.status != 'Running' && item.show.status !=  'Ended' && item.show.status !=  'In Development'"
-              class="otherStatus"
-            >
-              {{ item.show.status }} <br />
-            </div>
+              class="otherStatus">
+              {{ item.show.status }} <br /></div>
           </div>
         </ion-label>
       </ion-item>
     </ion-list>
-    <!--Cards to generate random shows-->
-    <ion-card
-      class="randomGenCard"
-      *ngFor="let item of randomListGenerated"
-      button
-      (click)="launchFromHome($event, item)"
-    >
-      <!--Image Layer-->
-      <div>
-        <img class="cardImage" [src]="item.image.original" />
-      </div>
-      <!-- <div class="overlayColor"><img /></div> -->
-      <!--Overlay Layer-->
-      <div class="gradientLayer"><img /></div>
 
-      <div *ngIf="item.rating.average != null" class="cardRating">
-        ★ {{item.rating.average}}
-      </div>
-      <div *ngIf="item.rating.average == null" class="cardRating">★ --</div>
-      <!--Title-->
-      <div class="cardTitle">{{item.name}}</div>
-      <div class="cardLanguage">{{item.language}}</div>
-    </ion-card>
+    <!--Cards to generate random shows-->
+    <div style="background-color: #370d5765;">
+      <div class="pageHeadings" style="color: #8f59b8; padding-top: 25px;">Random Suggestion</div>
+
+      <ion-slides [options]="randomConfig" style="padding-bottom: 15px;">
+
+        <ion-slide>
+          <ion-card button>
+            <img class="randomCardImage" src="../../assets/images/showMore.jpg" />
+            <ion-card-content style="background-color: #370d57;">
+              <div class="randomCardTitle">Suggestions</div>
+            </ion-card-content>
+          </ion-card>
+        </ion-slide>
+
+
+        <ion-slide *ngFor="let item of random">
+          <ion-card button (click)="launchFromHome($event, item)">
+            <div><img class="randomCardImage" [src]="item.image.original" /></div>
+            <ion-card-content style="background-color: #370d57;">
+              <div class="randomCardTitle">{{item.name}}</div>
+            </ion-card-content>
+          </ion-card>
+        </ion-slide>
+
+
+        <ion-slide>
+          <ion-card button>
+            <img class="randomCardImage" src="../../assets/images/background.jpg" />
+            <ion-card-content style="background-color: #370d57;">
+              <div class="randomCardTitle">Click For More</div>
+            </ion-card-content>
+          </ion-card>
+        </ion-slide>
+      </ion-slides>
+    </div>
+
+    <!--Genre Selector-->
+    <ion-slides class="genreSlides" [options]="genreConfig">
+      <ion-slide style="margin-left: 15px;" (click)="genreSelector($event, item)" *ngFor="let item of genres">
+        <div><img class="genreImage" [src]="item.image" /></div>
+        <div class="genreOverlay"><img /></div>
+        <div class="genreTitle">{{item.name}}</div>
+      </ion-slide>
+    </ion-slides>
+
+    <!--Top Rated Section-->
+    <ion-list>
+      <ion-item button style="padding-top: 25px;" *ngFor="let item of usaShows" (click)="launchFromHome($event, item)">
+        <div class="listTemplate"></div>
+        <div class="listBg"><img /></div>
+        <div><img class="listImg" style="border-radius: 20px;" [src]="item.image.original" /></div>
+        <div class="listTitle">{{item.name}}</div>
+        <div *ngIf="item.rating.average == null" class="listRating">★ --</div>
+        <div *ngIf="item.rating.average !=null" class="listRating">★ {{item.rating.average}}</div>
+        <div class="listSubtitle">{{item.genres}}</div>
+      </ion-item>
+    </ion-list>
   </div>
 </ion-content>
