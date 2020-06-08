@@ -3,12 +3,7 @@ import { ApiService } from '../services/api.service';
 import { FirstPagePage } from '../page/first-page/first-page.page';
 import { ModalController } from '@ionic/angular';
 import { Genre } from '../home/genre';
-import { NetworkFilterService } from '../services/network-filter.service'
-import { promise } from 'protractor';
-
-
-
-
+import { NetworkFilterService } from '../services/network-filter.service';
 
 @Component({
   selector: 'app-home',
@@ -18,31 +13,17 @@ import { promise } from 'protractor';
 
 export class HomePage {
 
-  topRated: any = this.ntwrk.universalCollection;
-  bySearchResult: any = [];
-  integer: any;
-  usaShows: any = [];
-  public query: string;
-  hideSearch: boolean = true;
-  random: any = [];
-  filteredDrama: any = [];
-  genre: any = Genre;
 
-  constructor(private api: ApiService, private modalCtrl: ModalController, private ntwrk: NetworkFilterService) { }
+  random: any = []; //UI for top part - random cards
+  bySearchResult: any = []; //UI for search list - query list
+  usaShows: any = []; //UI for bottom part - top rated
+  hideSearch: boolean = true; //UI - hide search string and results
+  public query: string; // query string using ngModel
+  genre: any = Genre; // Genre JSON file connection
 
-  ngOnInit() {
-    this.randomSuggestion();
-    this.randomDisplay();
-    this.getAllData();
-    this.ntwrk.universalCaller();
-    this.usaShows = this.ntwrk.filteredCollection;
+  test: any = [];
 
-
-
-  }
-
-
-
+  //UI Slider Configurations
   randomConfig = {
     spaceBetween: 3,
     // centeredSlides: true,
@@ -55,9 +36,29 @@ export class HomePage {
     slidesPerView: 2.1
 
   }
+
+  //random number generator function
+  randomNumber(min: any, max: any) { return Math.floor(Math.random() * (max - min + 1) + min); }
+
+  constructor(private api: ApiService, private modalCtrl: ModalController, private ntwrk: NetworkFilterService) { }
+
+  ngOnInit() {
+    this.ntwrk.universalCaller();
+    this.completeColection();
+
+  }
+
+  completeColection() {
+    this.test.push(this.ntwrk.universalCollection);
+    console.log(this.test);
+
+  }
+
+
+
   async onClickHomeButton() {
     this.hideResults();
-    this.ntwrk.basicFilter();
+    this.ntwrk.basicFilter("Korean");
     this.usaShows = this.ntwrk.filteredCollection;
     console.log(this.ntwrk.filteredCollection);
 
@@ -100,34 +101,6 @@ export class HomePage {
     return await modal.present();
   }
 
-  randomSuggestion() {
-    var b: any = [];
-    var c: any = [];
-    var d: any = [];
-    var e: any = [];
-
-    this.randomInt(0, 193); //Calls for random Int
-    this.api.getHomePageData(this.integer).subscribe((data) => {
-      var initial: any = data;
-      const length = initial.length; //get the lenghth of the result
-
-      for (var i = 0; i < 15; i++) {
-        this.randomInt(0, length); { var a: any = initial[this.integer]; }
-        b.push(a); c.push(b.concat());
-      }
-      d.push(c[14]); e = d[0]; this.random = e.filter(d => d.image != null);
-      this.randomDisplay();
-    })
-  }
-
-
-  randomInt(min: any, max: any) {
-    this.integer = Math.floor(Math.random() * (max - min + 1) + min);
-    //console.log(this.result);
-
-
-  }
-
   async launchFromHome(event, item) {
     item: item;
     const modal = await this.modalCtrl.create({
@@ -136,89 +109,6 @@ export class HomePage {
     });
     return await modal.present();
   }
-
-  moreRandom() {
-    this.randomInt(0, 193);
-    this.api.getHomePageData(this.integer).subscribe((data) => {
-      var dataArray: any = data;
-      var fI: any = dataArray.filter(data => data.image != null);
-      var fIN: any = fI.filter(data => data.network != null);
-      var fINC: any = fIN.filter(data => data.network.country.code == "US");
-      var fINCR: any = fINC.filter(data => data.rating.average != null);
-      var fINCR1: any = fINCR.filter(data => data.rating.average > 8.0);
-      this.usaShows = this.usaShows.concat(fINCR1);
-
-    });
-
-  }
-
-
-  randomDisplay() {
-
-    this.randomInt(0, 193);
-    this.api.getHomePageData(this.integer).subscribe((data) => {
-      var dataArray: any = data;
-      var filtering: any = dataArray.filter(data => data.image != null && data.network != null && data.network.country.code == "US" && data.rating.average != null && data.rating.average > 9);
-      this.usaShows = filtering;
-      for (let i = 0; i < 5; i++) {
-        this.moreRandom();
-      }
-    });
-  }
-
-
-  alldata: any = [];
-  eachPage1: any = [];
-
-
-  async getAllData() {
-    var alldataFile: any = [];
-    var alldataFile1: any = [];
-    for (let i = 1; i <= 100; i++) {
-      this.getData(i);
-    }
-
-    alldataFile = this.alldata;
-
-
-
-    // console.log(this.hboShows);
-    // console.log(this.alldata);
-
-    //&& data.network != null && data.network.country.code == "US" && data.rating.average != null && data.rating.average > 9
-
-  }
-  async filterResl() {
-    var xyz: any = this.alldata.filter(data => data.image != null);
-    //await console.log(xyz);
-
-
-  }
-
-
-  hboShows: any = [];
-  async getData(i) {
-    await this.api.getHomePageData(i).subscribe((data) => {
-      this.eachPage1 = data;
-      var filtering: any = this.eachPage1.filter(data => data.image != null && data.language == "English" && data.network != null && data.network.country.code == "US" && data.rating.average != null && data.status != "Ended");
-      var hboNetwork: any;
-      Array.prototype.push.apply(this.hboShows, hboNetwork)
-      Array.prototype.push.apply(this.alldata, filtering)
-
-    });
-  }
-
-
-
-
-
-
-
-
-
-
-
-
 
   genreSelector(event, item) {
     item: item;
@@ -232,9 +122,7 @@ export class HomePage {
 
     })
 
-    if (item.name == 'Drama') {
-      this.filteredDrama = this.random.filter(data => data.genres == "Drama");
-    }
+
 
 
   }

@@ -10,18 +10,10 @@ export class NetworkFilterService {
 
   universalCollection: any = [];
   filteredCollection: any = [];
-  integer: any;
-  random: any = [];
-  public hboShows: any = [];
-  public test: any = [];
 
-  // getDatas() {
-  //   this.api.getHomePageData(1).subscribe((data) => {
-  //     this.test = data;
-  //     Array.prototype.push.apply(this.hboShows, this.test);
-  //   });
-  //   return Promise.resolve(this.hboShows);
-  // }
+
+
+
 
   async universalCaller() {
     for (let i = 1; i <= 193; i++) {
@@ -29,37 +21,48 @@ export class NetworkFilterService {
         var temp: any = data;
         var filteringR8: any = temp.filter(data => data.image != null);
         Array.prototype.push.apply(this.universalCollection, filteringR8);
-
-
       });
     }
-    //this.basicFilter();
+    const i = this.randomNumber(0, 14000);
+    return Promise.resolve(this.universalCollection);
+  }
 
-    console.log();
+  async basicFilter(genre) {
+    const map = await this.universalCollection.filter(data => data.language == genre && data.rating.average > 8);
+    const shuffled = map.sort(() => 0.5 - Math.random());
+    let selected = shuffled.slice(0, 10);
+    this.filteredCollection = selected;
+    console.log(selected);
 
+  }
+
+  randomNumber(min: any, max: any) { return Math.floor(Math.random() * (max - min + 1) + min); }
+
+  async topRated() {
+    const pgNo = this.randomNumber(0, 193);
+    var top15: any = [];
+    var page5: any = [];
+
+    for (let i = 0; i < 5; i++) {
+      const pgNo = this.randomNumber(0, 193);
+      this.api.getHomePageData(pgNo).subscribe((data) => {
+        const iData: any = data;
+        var fData: any = iData.filter(data => data.image != null && data.rating.average != null);
+        Array.prototype.push.apply(page5, fData);
+      });
+    }
+    //console.log(page5);
+    for (var j = 0; j < 15; j++) {
+      let i = this.randomNumber(0, page5.length);
+      Array.prototype.push.apply(top15, page5[i]);
+      // top15.push(page5[i]);
+    }
+    await console.log(top15);
+    return Promise.resolve(top15);
+  }
+}
 
 
     // const shuffled = this.universalCollection.sort(() => 0.5 - Math.random());
     // let selected = shuffled.slice(0, 10);
     // //console.log(selected);
-    return Promise.resolve(this.universalCollection);
-  }
-
-  // && data.language == "English" && data.network != null && data.network.country.code == "US" && data.rating.average != null && data.status != "Ended"
-  async basicFilter() {
-
-    const map = await this.universalCollection.filter(data => data.language == "Korean" && data.rating.average > 8);
-    const shuffled = map.sort(() => 0.5 - Math.random());
-    let selected = shuffled.slice(0, 10);
-    this.filteredCollection = selected;
-
-
-    console.log(selected);
-
-
-  }
-  randomInt(min: any, max: any) {
-    this.integer = Math.floor(Math.random() * (max - min + 1) + min);
-    //console.log(this.result);
-  }
-}
