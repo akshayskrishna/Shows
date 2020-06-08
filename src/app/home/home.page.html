@@ -40,7 +40,7 @@
 
     <!--  Ion List for search reseults   -->
     <ion-list *ngIf="hideSearch">
-      <ion-item (click)="openShowDetails($event, item)" *ngFor="let item of searchResult">
+      <ion-item (click)="openShowDetails($event, item)" *ngFor="let item of bySearchResult">
 
         <!--  Ion List Header   -->
         <ion-avatar slot="start"><img [src]="item.show.image.original" /></ion-avatar>
@@ -111,7 +111,7 @@
 
     <!--Top Rated Section-->
     <ion-list>
-      <ion-item button style="padding-top: 25px;" *ngFor="let item of usaShows" (click)="launchFromHome($event, item)">
+      <ion-item button style="padding-top: 25px;" (click)="launchFromHome($event, item)" *ngFor="let item of usaShows">
         <div class="listTemplate"></div>
         <div class="listBg"><img /></div>
         <div><img class="listImg" style="border-radius: 20px;" [src]="item.image.original" /></div>

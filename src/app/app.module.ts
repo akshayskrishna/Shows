@@ -11,6 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ModalController } from '@ionic/angular';
 import { FirstPagePageModule } from '../app/page/first-page/first-page.module';
+import { HomePage } from './home/home.page';
 
 
 @NgModule({

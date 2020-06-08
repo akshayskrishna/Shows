@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { FirstPagePage } from '../page/first-page/first-page.page';
 import { ModalController } from '@ionic/angular';
-import { Genre } from '../home/genre'
+import { Genre } from '../home/genre';
+import { NetworkFilterService } from '../services/network-filter.service'
+import { promise } from 'protractor';
 
 
 
@@ -16,8 +18,8 @@ import { Genre } from '../home/genre'
 
 export class HomePage {
 
-
-  searchResult: any = [];
+  topRated: any = this.ntwrk.universalCollection;
+  bySearchResult: any = [];
   integer: any;
   usaShows: any = [];
   public query: string;
@@ -26,15 +28,21 @@ export class HomePage {
   filteredDrama: any = [];
   genre: any = Genre;
 
-  constructor(private api: ApiService, private modalCtrl: ModalController) { }
+  constructor(private api: ApiService, private modalCtrl: ModalController, private ntwrk: NetworkFilterService) { }
 
   ngOnInit() {
     this.randomSuggestion();
     this.randomDisplay();
     this.getAllData();
+    this.ntwrk.universalCaller();
+    this.usaShows = this.ntwrk.filteredCollection;
+
 
 
   }
+
+
+
   randomConfig = {
     spaceBetween: 3,
     // centeredSlides: true,
@@ -47,9 +55,14 @@ export class HomePage {
     slidesPerView: 2.1
 
   }
-  onClickHomeButton() {
+  async onClickHomeButton() {
     this.hideResults();
-    this.randomSuggestion();
+    this.ntwrk.basicFilter();
+    this.usaShows = this.ntwrk.filteredCollection;
+    console.log(this.ntwrk.filteredCollection);
+
+    const test = this.ntwrk.filteredCollection;
+
   }
   hideResults() {
     this.hideSearch = false;
@@ -62,14 +75,9 @@ export class HomePage {
   async getDataBySearch(event) {
     this.showResults();
     this.query = event;
-    var input: any = [];
-    var filteredInput: any = [];
     return this.api.getDataBySearch(this.query).subscribe((data) => {
-      input = (data)
-
-      // input['list'] = (data)
-      // filteredInput = input['list'];
-      this.searchResult = input.filter(d => d.show.image != null);
+      var input: any = data;
+      this.bySearchResult = input.filter(d => d.show.image != null);
     });
   }
 
@@ -193,7 +201,7 @@ export class HomePage {
     await this.api.getHomePageData(i).subscribe((data) => {
       this.eachPage1 = data;
       var filtering: any = this.eachPage1.filter(data => data.image != null && data.language == "English" && data.network != null && data.network.country.code == "US" && data.rating.average != null && data.status != "Ended");
-      var hboNetwork: any = filtering.filter(data => data.network.name == "HBO");
+      var hboNetwork: any;
       Array.prototype.push.apply(this.hboShows, hboNetwork)
       Array.prototype.push.apply(this.alldata, filtering)
 
