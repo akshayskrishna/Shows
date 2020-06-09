@@ -16,7 +16,7 @@ export class NetworkFilterService {
 
 
   async universalCaller() {
-    for (let i = 1; i <= 193; i++) {
+    for (let i = 1; i <= 100; i++) {
       this.api.getHomePageData(i).subscribe((data) => {
         var temp: any = data;
         var filteringR8: any = temp.filter(data => data.image != null);
@@ -25,15 +25,6 @@ export class NetworkFilterService {
     }
     const i = this.randomNumber(0, 14000);
     return Promise.resolve(this.universalCollection);
-  }
-
-  async basicFilter(genre) {
-    const map = await this.universalCollection.filter(data => data.language == genre && data.rating.average > 8);
-    const shuffled = map.sort(() => 0.5 - Math.random());
-    let selected = shuffled.slice(0, 10);
-    this.filteredCollection = selected;
-    console.log(selected);
-
   }
 
   randomNumber(min: any, max: any) { return Math.floor(Math.random() * (max - min + 1) + min); }
@@ -51,18 +42,34 @@ export class NetworkFilterService {
         Array.prototype.push.apply(page5, fData);
       });
     }
-    //console.log(page5);
-    for (var j = 0; j < 15; j++) {
-      let i = this.randomNumber(0, page5.length);
-      Array.prototype.push.apply(top15, page5[i]);
-      // top15.push(page5[i]);
-    }
-    await console.log(top15);
-    return Promise.resolve(top15);
+
   }
+
+  forLanguage(lang) {
+    const picker: any = [];
+    const test = this.universalCollection;
+    const filter = test.filter(data => data.language == lang && data.image != null && data.rating != null && data.rating.average > 8);
+    const max = filter.length;
+    for (let i = 0; i < 10; i++) {
+      const j = this.randomNumber(0, max);
+      picker.push(filter[j]);
+    }
+    console.log(picker);
+    this.filteredCollection = picker;
+  }
+
+  //&& 
+  forAnime() {
+    const picker: any = [];
+    const test = this.universalCollection;
+    const filter = test.filter(data => data.language == "Japanese" && data.image != null && data.rating != null && data.rating.average > 8 && data.type == "Animation");
+    const max = filter.length;
+    for (let i = 0; i < 10; i++) {
+      const j = this.randomNumber(0, max);
+      picker.push(filter[j]);
+    }
+    console.log(picker);
+    this.filteredCollection = picker;
+  }
+
 }
-
-
-    // const shuffled = this.universalCollection.sort(() => 0.5 - Math.random());
-    // let selected = shuffled.slice(0, 10);
-    // //console.log(selected);

@@ -4,6 +4,7 @@ import { FirstPagePage } from '../page/first-page/first-page.page';
 import { ModalController } from '@ionic/angular';
 import { Genre } from '../home/genre';
 import { NetworkFilterService } from '../services/network-filter.service';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -17,11 +18,12 @@ export class HomePage {
   random: any = []; //UI for top part - random cards
   bySearchResult: any = []; //UI for search list - query list
   usaShows: any = []; //UI for bottom part - top rated
-  hideSearch: boolean = true; //UI - hide search string and results
-  public query: string; // query string using ngModel
+  hideSearch: boolean = false; //UI - hide search string and results
+  resultsList: boolean = true;
+  public query: string = "Catch Up"; // query string using ngModel
   genre: any = Genre; // Genre JSON file connection
-
-  test: any = [];
+  randomTop: any = [];
+  pulledData: any = [];
 
   //UI Slider Configurations
   randomConfig = {
@@ -39,44 +41,108 @@ export class HomePage {
 
   //random number generator function
   randomNumber(min: any, max: any) { return Math.floor(Math.random() * (max - min + 1) + min); }
+  randomNumberAgain(min: any, max: any) { return Math.floor(Math.random() * (max - min + 1) + min); }
 
-  constructor(private api: ApiService, private modalCtrl: ModalController, private ntwrk: NetworkFilterService) { }
+  constructor(private api: ApiService, private modalCtrl: ModalController, private ntwrk: NetworkFilterService, public toastController: ToastController) { }
 
   ngOnInit() {
+    this.topRated()
     this.ntwrk.universalCaller();
-    this.completeColection();
+    //this.completeColection();
 
   }
 
+  topRated() {
+    const pgNo = this.randomNumber(0, 193);
+    this.api.getHomePageData(pgNo).subscribe((data) => {
+      const iData: any = data;
+      const fData: any = iData.filter(data => data.image != null);
+      Array.prototype.push.apply(this.random, fData);
+      console.log(this.random);
+    });
+
+    this.randomSlicer();
+    this.randomPlanner();
+    // this.networkTask()
+  }
+
+  randomSlicer() {
+    setTimeout(() => {
+      const slicer = this.random.slice(0, 10);
+      this.random = slicer;
+    }, 2000);
+
+  }
+
+  randomPlannerList: any = [];
+
+  randomPlanner() {
+    const pgNo = this.randomNumberAgain(0, 20);
+    this.api.getHomePageData(pgNo).subscribe((data) => {
+      const iData: any = data;
+      const fData: any = iData.filter(data => data.image != null && data.rating != null && data.rating.average > 8);
+      // Array.prototype.push.apply(this.random, fData);
+      Array.prototype.push.apply(this.randomPlannerList, fData);
+      console.log(this.randomPlannerList);
+      // console.log(this.randomPlannerList.length);
+    });
+  }
+
+  // networkTask() {
+  //   var final = [];
+  //   setTimeout(() => {
+  //     var picker = [];
+  //     const test = this.ntwrk.universalCollection;
+  //     // const filter = test.filter(data => );
+  //     const number = test.length;
+  //     for (let i = 0; i < 10; i++) {
+  //       const j = this.randomNumber(0, number);
+  //       picker.push(test[j]);
+  //     }
+  //     const slicer = picker.slice(0, 10);
+  //     this.randomPlannerList = slicer;
+  //     this.randomTop = slicer;
+  //   }, 3000);
+  // }
+
+  refresh() {
+    var picker = [];
+    const test = this.ntwrk.universalCollection;
+    const filter = test.filter(data => data.rating != null && data.rating.average > 8);
+    const number = filter.length;
+    for (let i = 0; i < 10; i++) {
+      const j = this.randomNumber(0, number);
+      picker.push(filter[j]);
+    }
+    const slicer = picker.slice(0, 10);
+    this.randomPlannerList = slicer;
+  }
+
+
+
+  //successfully working network pull
   completeColection() {
-    this.test.push(this.ntwrk.universalCollection);
-    console.log(this.test);
-
+    var test: any = [];
+    this.pulledData.push(this.ntwrk.universalCollection); //pulling data from network successfully
+    // Array.prototype.push.apply(test, this.pulledData);
+    console.log(this.pulledData);
   }
-
-
 
   async onClickHomeButton() {
-    this.hideResults();
-    this.ntwrk.basicFilter("Korean");
-    this.usaShows = this.ntwrk.filteredCollection;
-    console.log(this.ntwrk.filteredCollection);
-
-    const test = this.ntwrk.filteredCollection;
-
-  }
-  hideResults() {
-    this.hideSearch = false;
-  }
-  showResults() {
     this.hideSearch = true;
+    this.resultsList = false;
+    this.query = null;
+    this.refresh();
+
   }
+
 
   /* Method to call search results */
   async getDataBySearch(event) {
-    this.showResults();
+    this.hideSearch = false;
+    this.resultsList = true;
     this.query = event;
-    return this.api.getDataBySearch(this.query).subscribe((data) => {
+    this.api.getDataBySearch(this.query).subscribe((data) => {
       var input: any = data;
       this.bySearchResult = input.filter(d => d.show.image != null);
     });
@@ -85,22 +151,19 @@ export class HomePage {
   /* Launch next page details */
   async openShowDetails(event, item) {
     item: item;
-    var titleName: string = item.show.name;
-    var selectedId: string = item.show.id;
-    var imageUrl: string = item.show.image.original;
-    const summ = item.show.summary;
     const modal = await this.modalCtrl.create({
       component: FirstPagePage,
       componentProps: {
-        title: titleName,
-        id: selectedId,
-        img: imageUrl,
-        summary: summ,
+        title: item.show.name,
+        id: item.show.id,
+        img: item.show.image.original,
+        summary: item.show.summary,
       }
     });
     return await modal.present();
   }
 
+  //launch second page from top rated
   async launchFromHome(event, item) {
     item: item;
     const modal = await this.modalCtrl.create({
@@ -110,23 +173,36 @@ export class HomePage {
     return await modal.present();
   }
 
-  genreSelector(event, item) {
+  async genreSelector(event, item) {
     item: item;
-    //console.log("Item Clicked " + item.name)
+    const toast = await this.toastController.create({
+      message: 'Filtering for ' + item.name,
+      duration: 2000
+    });
+    toast.present();
+    setTimeout(() => {
+      if (item.id == "anime") {
+        this.ntwrk.forAnime();
+        setTimeout(() => {
+          this.randomPlannerList = this.ntwrk.filteredCollection;
+        })
+      }
 
-    this.api.fullSchedule().subscribe((data) => {
-      var schedule: any = data;
-      var fI: any = schedule.filter(data => data.image != null);
-      console.log(fI);
+      if (item.id == "language") {
+        this.ntwrk.forLanguage(item.name);
+        setTimeout(() => {
+          this.randomPlannerList = this.ntwrk.filteredCollection;
+        })
+      }
+
+      if (item.id == "random") {
+        this.refresh();
+      }
 
 
-    })
-
-
-
+    }, 1000);
 
   }
-
 
 
 }

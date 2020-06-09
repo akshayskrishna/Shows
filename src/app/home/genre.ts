@@ -1,22 +1,28 @@
 export const Genre = [
     {
-        "name": "Crime",
+        "id": "language",
+        "name": "Korean",
         "image": "../../assets/images/genre1.jpg"
     },
     {
-        "name": "Sci-Fi",
+        "id": "language",
+        "name": "Japanese",
         "image": "../../assets/images/genre2.jpg"
     },
     {
-        "name": "Romantic",
+        "id": "language",
+        "name": "English",
         "image": "../../assets/images/genre3.jpg"
     },
     {
-        "name": "Action",
-        "image": "../../assets/images/genre4.jpg"
+        "id": "anime",
+        "name": "Animes",
+        "image": "../../assets/images/genre5.jpg"
     },
     {
-        "name": "Drama",
-        "image": "../../assets/images/genre5.jpg"
+        "id": "random",
+        "name": "All Random",
+        "image": "../../assets/images/genre4.jpg"
     }
+
 ]

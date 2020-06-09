@@ -71,30 +71,11 @@ h3 {
   font-size: small;
 }
 
-.randomGenCard {
-  position: relative;
-  text-align: center;
-  margin: 15px;
+.pageHeadings{
+  font-size:larger;
+ font-weight: bold;
+  padding-left: 15px;
 }
-
-.gradientLayer {
-  position: absolute;
-  text-align: center;
-  margin: auto;
-  top: 0%;
-  bottom: 0%;
-  left: 0%;
-  right: 0%;
-  height: 100%;
-  width: 100%;
-  display: block;
-  min-height: 562.5px;
-  height: 537px;
-  width: 380px;
-  background-image: linear-gradient(rgba(255, 0, 0, 0), rgb(0, 0, 0));
-  z-index: 0;
-}
-
 
 .randomCardImage {
   width: 300px;
@@ -168,11 +149,11 @@ h3 {
 
 .listImg {
   position: absolute;
-  width: 145px;
-  height: 200px;
-  min-height: 200px;
+  width: 125px;
+  height: 180px;
+  min-height: 180px;
   left: 25px;
-  bottom: 40px;
+  bottom: 10px;
 }
 
 .listTitle {

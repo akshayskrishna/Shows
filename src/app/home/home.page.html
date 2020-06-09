@@ -27,10 +27,10 @@
     <!--Search For Text show up-->
     <div>
       <ion-text>
-        <div *ngIf="query == null">
-          <h6 style="margin-left: 20px;"></h6>
+        <div *ngIf="hideSearch">
+          <h6 style="margin-left: 20px;"> </h6>
         </div>
-        <div *ngIf="query != null">
+        <div *ngIf="hideSearch">
           <h6 style="margin-left: 20px;">
             Search for: {{ query | uppercase }}
           </h6>
@@ -39,7 +39,7 @@
     </div>
 
     <!--  Ion List for search reseults   -->
-    <ion-list *ngIf="hideSearch">
+    <ion-list *ngIf="resultsList">
       <ion-item (click)="openShowDetails($event, item)" *ngFor="let item of bySearchResult">
 
         <!--  Ion List Header   -->
@@ -81,9 +81,11 @@
 
         <ion-slide *ngFor="let item of random">
           <ion-card button (click)="launchFromHome($event, item)">
-            <div><img class="randomCardImage" [src]="item.image.original" /></div>
-            <ion-card-content style="background-color: #370d57;">
-              <div class="randomCardTitle">{{item.name}}</div>
+            <div><img class="randomCardImage" [src]="item.image.medium" /></div>
+            <ion-card-content style="background-color: #370d57; width: 145px; text-align: center; height: 58px;">
+              <div style="padding: auto;">
+                <div class="randomCardTitle">{{item.name}}</div>
+              </div>
             </ion-card-content>
           </ion-card>
         </ion-slide>
@@ -109,17 +111,31 @@
       </ion-slide>
     </ion-slides>
 
+
+    <div>Top Rated</div>
+
     <!--Top Rated Section-->
     <ion-list>
-      <ion-item button style="padding-top: 25px;" (click)="launchFromHome($event, item)" *ngFor="let item of usaShows">
-        <div class="listTemplate"></div>
-        <div class="listBg"><img /></div>
-        <div><img class="listImg" style="border-radius: 20px;" [src]="item.image.original" /></div>
-        <div class="listTitle">{{item.name}}</div>
-        <div *ngIf="item.rating.average == null" class="listRating">★ --</div>
-        <div *ngIf="item.rating.average !=null" class="listRating">★ {{item.rating.average}}</div>
-        <div class="listSubtitle">{{item.genres}}</div>
+
+      <ion-item button style="padding-top: 25px; " (click)="launchFromHome($event, item)"
+        *ngFor="let item of randomPlannerList">
+        <div *ngIf="item !== undefined">
+          <div class="listTemplate"></div>
+          <div class="listBg"><img /></div>
+          <div *ngIf="item.image == null">
+            <div>
+              <img class="listImg" style="border-radius: 20px;" src="../../assets/images/broken_link.png" />
+            </div>
+          </div>
+          <div *ngIf="item.image != null"><img class="listImg" style="border-radius: 20px;" [src]="item.image.medium" />
+          </div>
+          <div class="listTitle">{{item.name}}</div>
+          <div *ngIf="item.rating.average == null" class="listRating">★ --</div>
+          <div *ngIf="item.rating.average !=null" class="listRating">★ {{item.rating.average}}</div>
+          <div class="listSubtitle">{{item.genres}}</div>
+        </div>
       </ion-item>
     </ion-list>
+
   </div>
 </ion-content>
