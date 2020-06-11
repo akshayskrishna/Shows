@@ -56,7 +56,7 @@
       </ion-text>
     </div>
 
-    <!--  Ion List for search reseults   -->
+    <!--  Ion List for search results   -->
 
     <ion-list *ngIf="resultsList">
       <ion-item
@@ -64,7 +64,11 @@
         *ngFor="let item of bySearchResult"
       >
         <!--  Ion List Header   -->
-        <ion-avatar slot="start"
+        <ion-avatar *ngIf="item.show.image == null" slot="start"
+          ><img src="../../assets/images/showMore.jpg"
+        /></ion-avatar>
+
+        <ion-avatar *ngIf="item.show.image != null" slot="start"
           ><img [src]="item.show.image.original"
         /></ion-avatar>
         <h2 slot="end" class="rating" *ngIf="item.show.rating.average == null">
@@ -223,16 +227,75 @@
         </div>
         <div class="listTitle">{{item.name}}</div>
         <ion-chip class="listChip" mode="ios">
+          <ion-icon
+            style="padding-left: 10px; color: white;"
+            name="language"
+          ></ion-icon>
           <ion-label style="padding-left: 10px; padding-right: 10px;">
             {{item.language}}
           </ion-label>
         </ion-chip>
-        <div *ngIf="item.rating.average == null" class="listRating">
+        <!-- <div *ngIf="item.rating.average == null" class="listRating">
           ★ --
+        </div> -->
+        <div *ngIf="item.rating.average > 3">
+          <ion-chip
+            class="listRating"
+            style="background-color: brown !important;"
+            mode="ios"
+          >
+            <ion-icon
+              style="padding-left: 5px; font-size: small; color: black;"
+              name="star"
+            ></ion-icon>
+            <ion-label>
+              {{item.rating.average}}
+            </ion-label>
+          </ion-chip>
         </div>
-        <div *ngIf="item.rating.average !=null" class="listRating">
+        <div *ngIf="item.rating.average > 5.5">
+          <ion-chip
+            class="listRating"
+            style="background-color: rgb(255, 230, 0) !important;"
+            mode="ios"
+          >
+            <ion-icon
+              style="padding-left: 5px; font-size: small; color: black;"
+              name="star"
+            ></ion-icon>
+            <ion-label>
+              {{item.rating.average}}
+            </ion-label>
+          </ion-chip>
+        </div>
+        <div *ngIf="item.rating.average >= 8">
+          <ion-chip
+            class="listRating"
+            style="background-color: rgb(58, 255, 84);"
+            mode="ios"
+          >
+            <ion-icon
+              style="padding-left: 5px; font-size: small; color: black;"
+              fill="clear"
+              name="star"
+            ></ion-icon>
+            <ion-label>
+              {{item.rating.average}}
+            </ion-label>
+          </ion-chip>
+        </div>
+        <div>
+          <ion-chip (onclick)="bookmark()" class="bookmarkChip" mode="ios">
+            <ion-icon
+              style="margin: 0; color: #ff5f5f;"
+              name="bookmark"
+            ></ion-icon>
+          </ion-chip>
+        </div>
+
+        <!-- <div *ngIf="item.rating.average !=null" class="listRating">
           ★ {{item.rating.average}}
-        </div>
+        </div> -->
         <!-- <div class="listSubtitle">{{item.genres}}</div> -->
       </div>
     </ion-item>
