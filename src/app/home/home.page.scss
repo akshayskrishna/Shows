@@ -71,10 +71,15 @@ h3 {
   font-size: small;
 }
 
-.pageHeadings{
-  font-size:larger;
- font-weight: bold;
+.pageHeadings {
+  font-size: large;
+  font-weight: bold;
+  width: 100%;
+  height: 50px;
+  background-color: rgb(24, 24, 24);
+  padding-top: 15px;
   padding-left: 15px;
+  padding-bottom: 15px;
 }
 
 .randomCardImage {
@@ -85,7 +90,6 @@ h3 {
   min-height: 200px;
 }
 
-
 .randomCardTitle {
   color: #ffffff;
   font-size: small;
@@ -94,19 +98,20 @@ h3 {
 
 .genreSlides {
   padding-top: 25px;
-  background-color: #242424;
+  background-color: #050505;
   padding-bottom: 25px;
 }
 
 .genreImage {
   width: 200px;
-  height: 100px;
+  height: 90px;
   z-index: -1;
+  border-radius: 90px;
 }
 
 .genreOverlay {
   width: 200px;
-  height: 110px;
+  height: 70px;
   position: absolute;
   text-align: center;
   margin: auto;
@@ -118,23 +123,31 @@ h3 {
   left: 0%;
   right: 0%;
   display: block;
-  background-color: #ffffff10;
+  background-image: linear-gradient(
+    135deg,
+    #464646 0%,
+    #747575 50%,
+    #303030 63%,
+    #818181 100%
+  );
+  opacity: 0.5;
   z-index: 0;
+  border-radius: 90px;
 }
 
 .genreTitle {
   position: absolute;
   text-align: center;
   width: 100%;
-  top: 45px;
+  top: 35px;
   z-index: 1;
   font-weight: bold;
-  color: #000000;
+  color: #ffffff;
 }
 
 .listTemplate {
   width: 373px;
-  height: 240px;
+  height: 200px;
 }
 
 .listBg {
@@ -149,8 +162,8 @@ h3 {
 
 .listImg {
   position: absolute;
-  width: 125px;
-  height: 180px;
+  width: 115px;
+  height: 150px;
   min-height: 180px;
   left: 25px;
   bottom: 10px;
@@ -160,26 +173,25 @@ h3 {
   position: absolute;
   left: 190px;
   padding-right: 25px;
-  top: 80px;
+  top: 40px;
   font-weight: bold;
   font-size: medium;
 }
 
-.listRating {
+.listChip {
   position: absolute;
   left: 190px;
-  padding-right: 25px;
-  top: 150px;
-  color: rgb(238, 238, 41);
-  font-weight: bold;
+  top: 145px;
+  background-color: #58ff7cd2;
+  color: black;
+  font-size: small;
 }
 
-.listSubtitle {
+.listRating {
   position: absolute;
-  left: 190px;
+  left: 200px;
   padding-right: 25px;
-  right: 10px;
-  bottom: 20px;
-  color: rgb(230, 230, 230);
-  font-size: small;
+  top: 120px;
+  color: rgb(238, 238, 41);
+  font-weight: bold;
 }

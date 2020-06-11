@@ -129,10 +129,11 @@ export class HomePage {
   }
 
   async onClickHomeButton() {
-    this.hideSearch = true;
+    this.hideSearch = false;
     this.resultsList = false;
     this.query = null;
     this.refresh();
+    this.topRated();
 
   }
 

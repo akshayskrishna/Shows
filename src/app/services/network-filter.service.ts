@@ -11,10 +11,6 @@ export class NetworkFilterService {
   universalCollection: any = [];
   filteredCollection: any = [];
 
-
-
-
-
   async universalCaller() {
     for (let i = 1; i <= 100; i++) {
       this.api.getHomePageData(i).subscribe((data) => {
@@ -58,7 +54,7 @@ export class NetworkFilterService {
     this.filteredCollection = picker;
   }
 
-  //&& 
+
   forAnime() {
     const picker: any = [];
     const test = this.universalCollection;
