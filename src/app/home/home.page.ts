@@ -140,6 +140,7 @@ export class HomePage {
       var input: any = data;
       // this.bySearchResult = input.filter(d => d.show.image != null);
       this.bySearchResult = input;
+      console.log(this.bySearchResult);
     });
   }
 
@@ -188,10 +189,17 @@ export class HomePage {
     item: item;
     const pre: string = item.premiered;
     const premiered: string = pre.slice(0, 4);
+    var network;
     console.log(premiered);
     let navData: NavigationExtras = {
       queryParams: {
-        title: item.name, id: item.id, img: item.image.original, summary: item.summary, premiered: premiered,
+        title: item.name,
+        id: item.id,
+        img: item.image.original,
+        summary: item.summary,
+        premiered: premiered,
+        network: item.network.name,
+        status: item.status,
 
       }
 
@@ -201,6 +209,24 @@ export class HomePage {
   /* Launch next page details */
   async openShowDetails(event, item) {
     item: item;
+    var network;
+
+    //Premier Year details ironed out
+    const pre: string = item.show.premiered;
+    if (pre == null) {
+      var premiered: string = "No Data"
+    } else {
+      premiered = pre.slice(0, 4);
+    }
+
+
+    //Year Data ironed out
+    if (item.show.network == null) {
+      network = "No data"
+    }
+    else {
+      network = item.show.network.name;
+    }
 
 
     let navData: NavigationExtras = {
@@ -209,8 +235,9 @@ export class HomePage {
         id: item.show.id,
         img: item.show.image.original,
         summary: item.show.summary,
-
-
+        premiered: premiered,
+        network: network,
+        status: item.show.status,
       }
     }
     this.router.navigate(['showPage'], navData);

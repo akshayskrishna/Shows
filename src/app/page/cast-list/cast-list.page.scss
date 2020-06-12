@@ -1,0 +1,26 @@
+.itemsCustom{
+    width: 100%; height: 110px; background-color: rgb(8, 8, 8);  border-radius: 5px;
+}
+
+.imageDiv{
+    margin-left: 15px; margin-top: 10px; position: absolute;
+}
+
+.photoDiv{
+    border-radius: 0px; width: 80px; height: 90px;
+}
+
+.titleDiv{
+    color: rgb(255, 255, 255); position: absolute; left: 120px; top: 25px; font-size: large; font-weight: bold;
+}
+
+.subtitleDiv{
+    color: rgb(168, 168, 168); position: absolute; left: 120px; top: 50px; font-size: medium; font-style: italic; padding-right: 30px;
+}
+.headingText {
+    text-align: center;
+    padding-left: 20px;
+    color: #fff351;
+    font-size: x-large !important;
+    font-weight: bold;
+  }

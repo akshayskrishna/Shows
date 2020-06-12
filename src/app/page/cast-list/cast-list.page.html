@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <h2 class="headingText">
+    All Cast from <br>
+  </h2>
+
+  <h5 style="text-align: center;">{{title}}</h5>
+
+  <ion-list>
+    <ion-item style="padding-top: 2px;" *ngFor="let item of castDetails">
+      <div class="itemsCustom">
+        <div class="imageDiv">
+          <img class="photoDiv" [src]="item.person.image.original" />
+        </div>
+        <div class="titleDiv">{{item.person.name}}</div>
+        <div class="subtitleDiv">{{item.character.name}}</div>
+      </div>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

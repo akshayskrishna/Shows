@@ -23,6 +23,11 @@ const routes: Routes = [
     path: 'episodeSpecific',
     loadChildren: () => import('./page/episode-details/episode-details.module').then(m => m.EpisodeDetailsPageModule)
   },
+  {
+    path: 'castList',
+    loadChildren: () => import('./page/cast-list/cast-list.module').then(m => m.CastListPageModule)
+  },
+
 
 ];
 

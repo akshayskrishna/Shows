@@ -51,6 +51,11 @@ export class ApiService {
     return this.http.get(url);
   }
 
+  getImages(id) {
+    const url = "http://api.tvmaze.com/shows/" + id + "/images";
+    return this.http.get(url);
+  }
+
 
 }
 

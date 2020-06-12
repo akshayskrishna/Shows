@@ -1,4 +1,5 @@
 .headingText {
+  text-align: center;
   padding-left: 20px;
   color: #fff351;
   font-size: x-large !important;
@@ -6,6 +7,7 @@
 }
 
 .subtitleText {
+  text-align: justify;
   padding-left: 20px;
   color: #929292;
   font-style: italic;
@@ -25,8 +27,21 @@
 }
 
 .summary {
+  text-align: justify;
   padding-left: 20px;
   padding-right: 20px;
   font-size: medium;
   color: #bbbbbb;
+}
+
+.topImage {
+  width: 100%;
+  height: 500px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.barSubtitle {
+  font-size: medium;
+  font-weight: bold;
 }
