@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { EpisodesListPage } from '../episodes-list/episodes-list.page'
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-first-page',
@@ -13,6 +14,8 @@ export class FirstPagePage implements OnInit {
   id;
   img;
   summary;
+  premiered: string;
+  pre: string;
   cleanText: any;
   numberOfSeasons: any;
   imageUrl = [];
@@ -23,13 +26,26 @@ export class FirstPagePage implements OnInit {
   episodeId: any;
   castDetails: any = [];
 
+  // title: item.name, id: item.id, img: item.image.original, summary: item.summary,
 
-  constructor(private modalCtrl: ModalController, private api: ApiService) { }
+  constructor(private modalCtrl: ModalController, private api: ApiService, private route: ActivatedRoute, private router: Router) {
+    this.route.queryParams.subscribe(data => {
+      this.title = data.title;
+      this.id = data.id;
+      this.img = data.img;
+      this.summary = data.summary;
+      this.premiered = data.premiered;
+
+    })
+  }
 
   ngOnInit() {
     this.seasonsData();
     this.castData();
     this.checkForSummary();
+    var url = this.router.url;
+    // this.premiered = this.pre.slice(0, 4);
+    console.log(this.premiered);
   }
 
   sliderConfig = {
@@ -44,7 +60,7 @@ export class FirstPagePage implements OnInit {
       this.seasons = data;
       this.numberOfSeasons = this.seasons.length;
 
-      //console.log(this.seasons);
+      console.log(this.seasons);
     });
   }
 
@@ -55,26 +71,25 @@ export class FirstPagePage implements OnInit {
     })
   }
 
-  CloseModal() {
-    this.modalCtrl.dismiss();
-  }
 
-  async openEpisodeList(event, item) {
+
+  openNextPage(event, item) {
     item: item;
     this.episodeId = item.id;
     const summary: any = item.summary;
-    const modal = await this.modalCtrl.create({
-      component: EpisodesListPage,
-      componentProps: {
+    let navData: NavigationExtras = {
+      queryParams: {
         id: this.episodeId,
         seasonNo: item.number,
         title: this.title,
         img: this.img,
         summary: summary,
         showId: this.id,
+
       }
-    });
-    return await modal.present();
+
+    }
+    this.router.navigate(['allEpisodeList'], navData);
   }
 
   checkForSummary() {

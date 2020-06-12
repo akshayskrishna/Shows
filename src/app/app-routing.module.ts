@@ -12,15 +12,15 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'first-page',
+    path: 'showPage',
     loadChildren: () => import('./page/first-page/first-page.module').then(m => m.FirstPagePageModule)
   },
   {
-    path: 'episodes-list',
+    path: 'allEpisodeList',
     loadChildren: () => import('./page/episodes-list/episodes-list.module').then(m => m.EpisodesListPageModule)
   },
   {
-    path: 'episodeDetails',
+    path: 'episodeSpecific',
     loadChildren: () => import('./page/episode-details/episode-details.module').then(m => m.EpisodeDetailsPageModule)
   },
 

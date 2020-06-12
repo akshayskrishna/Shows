@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { ModalController, NavController } from '@ionic/angular';
 import { EpisodeDetailsPage } from '../episode-details/episode-details.page';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-episodes-list',
@@ -17,7 +18,16 @@ export class EpisodesListPage implements OnInit {
   showId;
   episodes: any = [];
 
-  constructor(private api: ApiService, private modalcltr: ModalController, private navCtrl: NavController) { }
+  constructor(private api: ApiService, private modalcltr: ModalController, private navCtrl: NavController, private route: ActivatedRoute) {
+    this.route.queryParams.subscribe(data => {
+      this.id = data.id;
+      this.title = data.title;
+      this.img = data.img;
+      this.seasonNo = data.seasonNo;
+      this.summary = data.summary;
+      this.showId = data.showID;
+    })
+  }
 
   ngOnInit() {
     this.episodeListData();
@@ -25,7 +35,7 @@ export class EpisodesListPage implements OnInit {
 
   }
 
-  CloseModal() { this.modalcltr.dismiss(); }
+  // CloseModal() { this.modalcltr.dismiss(); }
 
   episodeListData() {
     this.api.getEpisodes(this.id).subscribe((data) => {
