@@ -5,6 +5,9 @@ import { ModalController } from '@ionic/angular';
 import { Genre } from '../home/genre';
 import { NetworkFilterService } from '../services/network-filter.service';
 import { ToastController } from '@ionic/angular';
+import { Router, NavigationExtras } from '@angular/router';
+
+
 
 @Component({
   selector: 'app-home',
@@ -43,7 +46,7 @@ export class HomePage {
   randomNumber(min: any, max: any) { return Math.floor(Math.random() * (max - min + 1) + min); }
   randomNumberAgain(min: any, max: any) { return Math.floor(Math.random() * (max - min + 1) + min); }
 
-  constructor(private api: ApiService, private modalCtrl: ModalController, private ntwrk: NetworkFilterService, public toastController: ToastController) { }
+  constructor(private router: Router, private api: ApiService, private modalCtrl: ModalController, private ntwrk: NetworkFilterService, public toastController: ToastController) { }
 
   ngOnInit() {
     this.topRated()
@@ -51,6 +54,7 @@ export class HomePage {
     //this.completeColection();
 
   }
+
 
   topRated() {
     const pgNo = this.randomNumber(0, 193);
@@ -88,24 +92,8 @@ export class HomePage {
     });
   }
 
-  // networkTask() {
-  //   var final = [];
-  //   setTimeout(() => {
-  //     var picker = [];
-  //     const test = this.ntwrk.universalCollection;
-  //     // const filter = test.filter(data => );
-  //     const number = test.length;
-  //     for (let i = 0; i < 10; i++) {
-  //       const j = this.randomNumber(0, number);
-  //       picker.push(test[j]);
-  //     }
-  //     const slicer = picker.slice(0, 10);
-  //     this.randomPlannerList = slicer;
-  //     this.randomTop = slicer;
-  //   }, 3000);
-  // }
 
-  refresh() {
+  async refresh() {
     var picker = [];
     const test = this.ntwrk.universalCollection;
     const filter = test.filter(data => data.rating != null && data.rating.average > 8);
@@ -116,6 +104,11 @@ export class HomePage {
     }
     const slicer = picker.slice(0, 10);
     this.randomPlannerList = slicer;
+    const toast = await this.toastController.create({
+      message: 'Refreshing List',
+      duration: 2000
+    });
+    toast.present();
   }
 
 
@@ -150,30 +143,6 @@ export class HomePage {
     });
   }
 
-  /* Launch next page details */
-  async openShowDetails(event, item) {
-    item: item;
-    const modal = await this.modalCtrl.create({
-      component: FirstPagePage,
-      componentProps: {
-        title: item.show.name,
-        id: item.show.id,
-        img: item.show.image.original,
-        summary: item.show.summary,
-      }
-    });
-    return await modal.present();
-  }
-
-  //launch second page from top rated
-  async launchFromHome(event, item) {
-    item: item;
-    const modal = await this.modalCtrl.create({
-      component: FirstPagePage,
-      componentProps: { title: item.name, id: item.id, img: item.image.original, summary: item.summary, }
-    });
-    return await modal.present();
-  }
 
   async genreSelector(event, item) {
     item: item;
@@ -213,6 +182,38 @@ export class HomePage {
     });
     toast.present();
 
+  }
+
+  openNextPage(event, item) {
+    item: item;
+    const pre: string = item.premiered;
+    const premiered: string = pre.slice(0, 4);
+    console.log(premiered);
+    let navData: NavigationExtras = {
+      queryParams: {
+        title: item.name, id: item.id, img: item.image.original, summary: item.summary, premiered: premiered,
+
+      }
+
+    }
+    this.router.navigate(['showPage'], navData);
+  }
+  /* Launch next page details */
+  async openShowDetails(event, item) {
+    item: item;
+
+
+    let navData: NavigationExtras = {
+      queryParams: {
+        title: item.show.name,
+        id: item.show.id,
+        img: item.show.image.original,
+        summary: item.show.summary,
+
+
+      }
+    }
+    this.router.navigate(['showPage'], navData);
   }
 
 

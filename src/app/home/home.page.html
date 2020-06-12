@@ -136,7 +136,7 @@
           <ion-card
             style="width: 145px;"
             button
-            (click)="launchFromHome($event, item)"
+            (click)="openNextPage($event, item)"
           >
             <div><img class="randomCardImage" [src]="item.image.medium" /></div>
             <ion-card-content
@@ -203,7 +203,7 @@
   </div>
   <ion-list>
     <ion-item
-      (click)="launchFromHome($event, item)"
+      (click)="openNextPage($event, item)"
       *ngFor="let item of randomPlannerList"
     >
       <div *ngIf="item !== undefined">

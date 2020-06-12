@@ -1,10 +1,13 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-icon
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <!-- <ion-icon
       slot="start"
       name="chevron-back-outline"
       (click)="CloseModal()"
-    ></ion-icon>
+    ></ion-icon> -->
     <ion-title>
       {{title}} Season {{ seasonNo }}
     </ion-title>

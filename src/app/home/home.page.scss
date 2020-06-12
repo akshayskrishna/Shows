@@ -170,7 +170,7 @@ h3 {
   left: 190px;
   padding-right: 25px;
   padding-bottom: 10px;
-  top: 60px;
+  top: 40px;
   font-weight: bold;
   font-size: medium;
 }
@@ -198,4 +198,8 @@ h3 {
   left: 265px;
   top: 140px;
   background-color: rgb(24, 24, 24);
+}
+
+.my-custom-menu {
+  --width: 500px;
 }
