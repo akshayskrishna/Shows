@@ -80,7 +80,7 @@ export class HomePage {
     const pgNo = this.randomNumberAgain(0, 20);
     this.api.getHomePageData(pgNo).subscribe((data) => {
       const iData: any = data;
-      const fData: any = iData.filter(data => data.image != null && data.rating != null && data.rating.average > 8);
+      const fData: any = iData.filter(data => data.image != null && data.rating != null && data.rating.average > 4);
       // Array.prototype.push.apply(this.random, fData);
       Array.prototype.push.apply(this.randomPlannerList, fData);
       console.log(this.randomPlannerList);
@@ -145,7 +145,8 @@ export class HomePage {
     this.query = event;
     this.api.getDataBySearch(this.query).subscribe((data) => {
       var input: any = data;
-      this.bySearchResult = input.filter(d => d.show.image != null);
+      // this.bySearchResult = input.filter(d => d.show.image != null);
+      this.bySearchResult = input;
     });
   }
 
@@ -202,6 +203,15 @@ export class HomePage {
 
 
     }, 1000);
+
+  }
+
+  async bookmark() {
+    const toast = await this.toastController.create({
+      message: 'Saving feature is under development',
+      duration: 2000
+    });
+    toast.present();
 
   }
 
