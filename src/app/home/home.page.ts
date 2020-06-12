@@ -190,6 +190,12 @@ export class HomePage {
     const pre: string = item.premiered;
     const premiered: string = pre.slice(0, 4);
     var network;
+    if (item.network == null) {
+      network = "No data"
+    }
+    else {
+      network = item.network.name;
+    }
     console.log(premiered);
     let navData: NavigationExtras = {
       queryParams: {
@@ -198,7 +204,7 @@ export class HomePage {
         img: item.image.original,
         summary: item.summary,
         premiered: premiered,
-        network: item.network.name,
+        network: network,
         status: item.status,
 
       }
