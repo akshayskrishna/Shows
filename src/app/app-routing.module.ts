@@ -26,7 +26,11 @@ const routes: Routes = [
   {
     path: 'castList',
     loadChildren: () => import('./page/cast-list/cast-list.module').then(m => m.CastListPageModule)
+  },  {
+    path: 'search',
+    loadChildren: () => import('./page/search/search.module').then( m => m.SearchPageModule)
   },
+
 
 
 ];

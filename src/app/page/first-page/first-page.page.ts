@@ -19,6 +19,7 @@ export class FirstPagePage implements OnInit {
   premiered: string;
   status;
   allImages;
+  genre;
   pre: string;
   cleanText: any;
   numberOfSeasons: any;
@@ -44,6 +45,7 @@ export class FirstPagePage implements OnInit {
       this.premiered = data.premiered;
       this.network = data.network;
       this.status = data.status;
+      this.genre = data.genre;
 
     })
   }
@@ -60,6 +62,12 @@ export class FirstPagePage implements OnInit {
 
   }
 
+
+  genreSlider = {
+    spaceBetween: 1,
+    slidesPerView: 5.1
+  }
+
   ngOnInit() {
     this.seasonsData();
     this.castData();
@@ -68,10 +76,7 @@ export class FirstPagePage implements OnInit {
     this.summaryCrop();
     this.getImages(this.id);
 
-
-    var url = this.router.url;
-    // this.premiered = this.pre.slice(0, 4);
-    console.log(this.status);
+    console.log(this.genre);
   }
 
   summaryCrop() {

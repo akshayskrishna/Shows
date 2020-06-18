@@ -30,9 +30,9 @@ export class HomePage {
 
   //UI Slider Configurations
   randomConfig = {
-    spaceBetween: 3,
-    // centeredSlides: true,
-    slidesPerView: 2.1
+    spaceBetween: 5,
+    centeredSlides: true,
+    slidesPerView: 1.9
 
   }
   genreConfig = {
@@ -189,6 +189,7 @@ export class HomePage {
     item: item;
     const pre: string = item.premiered;
     const premiered: string = pre.slice(0, 4);
+
     var network;
     if (item.network == null) {
       network = "No data"
@@ -206,6 +207,8 @@ export class HomePage {
         premiered: premiered,
         network: network,
         status: item.status,
+        genre: item.genres,
+
 
       }
 
@@ -248,6 +251,9 @@ export class HomePage {
     }
     this.router.navigate(['showPage'], navData);
   }
+
+
+  search() { this.router.navigate(['search']); }
 
 
 }

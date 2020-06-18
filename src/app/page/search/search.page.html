@@ -1,0 +1,72 @@
+<ion-header></ion-header>
+
+<ion-content>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Search Shows</ion-title>
+  </ion-toolbar>
+
+  <!--
+      ****************************************************
+      Searchbar
+      ****************************************************
+    -->
+  <div>
+    <ion-searchbar animated showCancelButton="focus" cancelButtonText="Cancel" placeholder="Search"
+      (search)="getDataBySearch($event.target.value)" ng-model="query"></ion-searchbar>
+  </div>
+
+
+
+
+  <!--  Ion List for search results   -->
+
+  <ion-list>
+    <ion-item (click)="openShowDetails($event, item)" *ngFor="let item of bySearchResult">
+      <ion-avatar *ngIf="item.show.image == null" slot="start"><img src="../../../assets/images/background.jpg" />
+      </ion-avatar>
+      <ion-avatar *ngIf="item.show.image != null" slot="start"><img [src]="item.show.image.original" /></ion-avatar>
+      <h2 slot="end" class="rating" *ngIf="item.show.rating.average == null"> --/10</h2>
+      <h2 slot="end" class="rating" *ngIf="item.show.rating.average != null">{{item.show.rating.average}}/10</h2>
+
+      <ion-label>
+        <h1>{{item.show.name}}</h1>
+        <h3>{{ item.show.language }} <br />{{ item.show.genres }}</h3>
+        <div>
+          <div *ngIf="item.show.status === 'Running'" class="run">
+            {{ item.show.status }} <br />
+          </div>
+          <div *ngIf="item.show.status === 'Ended'" class="ended">
+            {{ item.show.status }} <br />
+          </div>
+          <div *ngIf="item.show.status === 'In Development'" class="inDev">
+            {{ item.show.status }} <br />
+          </div>
+          <div
+            *ngIf="item.show.status != 'Running' && item.show.status !=  'Ended' && item.show.status !=  'In Development'"
+            class="otherStatus">
+            {{ item.show.status }} <br />
+          </div>
+        </div>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</ion-content>

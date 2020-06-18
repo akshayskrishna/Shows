@@ -3,300 +3,138 @@
     <ion-title>
       {{ query | uppercase }}
     </ion-title>
+    <ion-icon button (click)="search()" class="searchIcon" slot="end" name="search"></ion-icon>
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content [fullscreen]="true">
-  <!--Header with title and refresh button-->
+
+  <!--
+  ****************************************************************
+    Header with title and Logo-refresh button
+  *****************************************************************
+  -->
+
   <ion-header collapse="condense">
     <ion-toolbar>
-      <img
-        button
-        (click)="onClickHomeButton()"
-        style="
-          width: 200px;
-          padding-left: 15px;
-          padding-top: 10px;
-          padding-bottom: 15px;
-        "
-        src="../../assets/catchUp.png"
-      />
-
-      <!-- <ion-title size="large">Shows</ion-title> -->
-      <!-- <ion-button slot="end" fill="clear" (click)="onClickHomeButton()">
-        <ion-icon slot="icon-only" name="refresh-outline" style="color: white;"></ion-icon>
-      </ion-button> -->
+      <img button (click)="onClickHomeButton()" class="catchUpLogo" src="../../assets/catchUp.png" />
+      <ion-icon button (click)="search()" class="searchIcon" slot="end" name="search"></ion-icon>
     </ion-toolbar>
   </ion-header>
 
-  <div style="background-color: #000000 !important;">
-    <!--Searchbar-->
-    <div>
-      <ion-searchbar
-        animated
-        showCancelButton="focus"
-        cancelButtonText="Cancel"
-        placeholder="Search"
-        (search)="getDataBySearch($event.target.value)"
-        ng-model="query"
-      ></ion-searchbar>
-    </div>
 
-    <!--Search For Text show up-->
-    <div>
-      <ion-text>
-        <div *ngIf="hideSearch">
-          <h6 style="margin-left: 20px;"></h6>
+  <!--
+  ****************************************************************
+    Suggestions Section
+  *****************************************************************
+  -->
+
+  <div class="sectionHeading" style="font-size: x-large;">Suggestions</div>
+  <ion-slides mode="ios" [options]="randomConfig" style="padding-bottom: 15px;">
+    <ion-slide button *ngFor="let item of random" (click)="openNextPage($event, item)" style="padding-right: 10px;">
+      <div>
+        <div>
+          <img class="randomImage" [src]="item.image.medium">
         </div>
-        <div *ngIf="hideSearch">
-          <h6 style="margin-left: 20px;">
-            Search for: {{ query | uppercase }}
-          </h6>
+        <div class="randomTitle">{{item.name}}</div>
+
+        <!--
+            ***********************************************************************************************************
+            Rating ngIf Section
+            ***********************************************************************************************************
+          -->
+
+        <div *ngIf="item.rating.average == null" class="randomSuggestionTitle" style="color: rgb(99, 99, 99);"> ☆☆☆☆☆
+          -</div>
+        <div ng-if="item.rating != null">
+          <div *ngIf="item.rating.average > 1 && item.rating.average <3 " class="randomSuggestionTitle">★☆☆☆☆
+            {{item.rating.average}} </div>
+          <div *ngIf="item.rating.average >= 3 && item.rating.average <6" class="randomSuggestionTitle">★★☆☆☆
+            {{item.rating.average}} </div>
+          <div *ngIf="item.rating.average >= 6 && item.rating.average <9" class="randomSuggestionTitle">★★★☆☆
+            {{item.rating.average}} </div>
+          <div *ngIf="item.rating.average >= 9 && item.rating.average <9.2" class="randomSuggestionTitle">★★★★☆
+            {{item.rating.average}} </div>
+          <div *ngIf="item.rating.average >= 9.2" class="randomSuggestionTitle">★★★★☆ {{item.rating.average}} </div>
         </div>
-      </ion-text>
-    </div>
+        <div class="randomLanguage">{{item.language}}</div>
+      </div>
+    </ion-slide>
+  </ion-slides>
 
-    <!--  Ion List for search results   -->
 
-    <ion-list *ngIf="resultsList">
-      <ion-item
-        (click)="openShowDetails($event, item)"
-        *ngFor="let item of bySearchResult"
-      >
-        <!--  Ion List Header   -->
-        <ion-avatar *ngIf="item.show.image == null" slot="start"
-          ><img src="../../assets/images/showMore.jpg"
-        /></ion-avatar>
 
-        <ion-avatar *ngIf="item.show.image != null" slot="start"
-          ><img [src]="item.show.image.original"
-        /></ion-avatar>
-        <h2 slot="end" class="rating" *ngIf="item.show.rating.average == null">
-          --/10
-        </h2>
-        <h2 slot="end" class="rating" *ngIf="item.show.rating.average != null">
-          {{item.show.rating.average}}/10
-        </h2>
+  <!--
+    ********************************************************************************************
+    Genre Selector
+    ********************************************************************************************
+  -->
 
-        <ion-label>
-          <h1>{{item.show.name}}</h1>
-          <h3>{{ item.show.language }} <br />{{ item.show.genres }}</h3>
-          <div>
-            <div *ngIf="item.show.status === 'Running'" class="run">
-              {{ item.show.status }} <br />
-            </div>
-            <div *ngIf="item.show.status === 'Ended'" class="ended">
-              {{ item.show.status }} <br />
-            </div>
-            <div *ngIf="item.show.status === 'In Development'" class="inDev">
-              {{ item.show.status }} <br />
-            </div>
-            <div
-              *ngIf="item.show.status != 'Running' && item.show.status !=  'Ended' && item.show.status !=  'In Development'"
-              class="otherStatus"
-            >
-              {{ item.show.status }} <br />
-            </div>
-          </div>
-        </ion-label>
-      </ion-item>
-    </ion-list>
+  <div class="sectionHeading" style="padding-bottom: 15px;">My Categories</div>
+  <ion-slides class="genreSlides" [options]="genreConfig">
+    <ion-slide style="margin-left: 15px;" (click)="genreSelector($event, item)" *ngFor="let item of genre">
+      <div><img class="genreImage" [src]="item.image" /></div>
+      <!-- <div class="genreOverlay"><img /></div> -->
+      <div class="genreTitle">{{item.name}}</div>
+    </ion-slide>
+  </ion-slides>
 
-    <!--Cards to generate random shows-->
+  <!--
+      **********************************************************************************************
+      Top Rated Section
+      **********************************************************************************************
+    -->
 
-    <div class="pageHeadings">
-      Random Suggestions
-    </div>
-    <div>
-      <!-- <div class="pageHeadings" style="color: #8f59b8; padding-top: 25px;">Random Suggestion</div> -->
-
-      <ion-slides [options]="randomConfig" style="padding-bottom: 15px;">
-        <ion-slide>
-          <ion-card style="width: 145px; height: 258px;" button>
-            <img
-              class="randomCardImage"
-              src="../../assets/images/showMore.jpg"
-            />
-            <ion-card-content
-              style="
-                background-color: #0e1f40;
-                width: 145px;
-                text-align: center;
-                height: 58px;
-              "
-            >
-              <div style="color: white;" class="randomCardTitle">
-                Suggestions
-              </div>
-            </ion-card-content>
-          </ion-card>
-        </ion-slide>
-
-        <ion-slide *ngFor="let item of random">
-          <ion-card
-            style="width: 145px;"
-            button
-            (click)="openNextPage($event, item)"
-          >
-            <div><img class="randomCardImage" [src]="item.image.medium" /></div>
-            <ion-card-content
-              style="
-                background-color: #0e1f40;
-                color: black;
-                width: 145px;
-                text-align: center;
-                height: 58px;
-              "
-            >
-              <div style="padding: auto;">
-                <div style="color: white;" class="randomCardTitle">
-                  {{item.name}}
-                </div>
-              </div>
-            </ion-card-content>
-          </ion-card>
-        </ion-slide>
-
-        <ion-slide>
-          <ion-card style="width: 145px; height: 258px;" button>
-            <img
-              class="randomCardImage"
-              src="../../assets/images/background.jpg"
-            />
-            <ion-card-content
-              style="
-                background-color: #0e1f40;
-                width: 145px;
-                text-align: center;
-                height: 58px;
-              "
-            >
-              <div style="color: white;" class="randomCardTitle">
-                Click For More
-              </div>
-            </ion-card-content>
-          </ion-card>
-        </ion-slide>
-      </ion-slides>
-    </div>
-
-    <!--Genre Selector-->
-
-    <div class="pageHeadings">
-      My Categories
-    </div>
-    <ion-slides class="genreSlides" [options]="genreConfig">
-      <ion-slide
-        style="margin-left: 15px;"
-        (click)="genreSelector($event, item)"
-        *ngFor="let item of genre"
-      >
-        <div><img class="genreImage" [src]="item.image" /></div>
-        <!-- <div class="genreOverlay"><img /></div> -->
-        <div class="genreTitle">{{item.name}}</div>
-      </ion-slide>
-    </ion-slides>
-
-    <div class="pageHeadings">Top Rated</div>
-
-    <!--Top Rated Section-->
-  </div>
+  <div class="sectionHeading" style="font-size: x-large;">Top Rated</div>
   <ion-list>
-    <ion-item
-      (click)="openNextPage($event, item)"
-      *ngFor="let item of randomPlannerList"
-    >
+    <ion-item (click)="openNextPage($event, item)" *ngFor="let item of randomPlannerList">
       <div *ngIf="item !== undefined">
         <div class="listTemplate"></div>
-        <!-- <div class="listBg"><img /></div> -->
         <div *ngIf="item.image == null">
           <div>
-            <img
-              class="listImg"
-              style="border-radius: 20px;"
-              src="../../assets/images/broken_link.png"
-            />
+            <img class="listImg" style="border-radius: 20px;" src="../../assets/images/broken_link.png" />
           </div>
         </div>
         <div *ngIf="item.image != null">
-          <img
-            class="listImg"
-            style="border-radius: 20px;"
-            [src]="item.image.medium"
-          />
+          <img class="listImg" style="border-radius: 20px;" [src]="item.image.medium" />
         </div>
         <div class="listTitle">{{item.name}}</div>
-        <ion-chip class="listChip" mode="ios">
-          <ion-icon
-            style="padding-left: 10px; color: white;"
-            name="language"
-          ></ion-icon>
+        <ion-chip class="listLanguage" mode="ios">
+          <ion-icon style="padding-left: 10px; color: white;" name="language"></ion-icon>
           <ion-label style="padding-left: 10px; padding-right: 10px;">
             {{item.language}}
           </ion-label>
         </ion-chip>
-        <!-- <div *ngIf="item.rating.average == null" class="listRating">
-          ★ --
-        </div> -->
-        <div *ngIf="item.rating.average > 3">
-          <ion-chip
-            class="listRating"
-            style="background-color: brown !important;"
-            mode="ios"
-          >
-            <ion-icon
-              style="padding-left: 5px; font-size: small; color: black;"
-              name="star"
-            ></ion-icon>
-            <ion-label>
-              {{item.rating.average}}
-            </ion-label>
+
+
+        <div *ngIf="item.rating.average == null" style="color: rgb(99, 99, 99);"> ☆☆☆☆☆-</div>
+        <div ng-if="item.rating != null">
+
+          <ion-chip *ngIf="item.rating.average > 1 && item.rating.average <3 " class="listRating"
+            style="background-color: brown !important;" mode="ios">
+            <div>★☆☆☆☆
+              {{item.rating.average}} </div>
           </ion-chip>
-        </div>
-        <div *ngIf="item.rating.average > 5.5">
-          <ion-chip
-            class="listRating"
-            style="background-color: rgb(255, 230, 0) !important;"
-            mode="ios"
-          >
-            <ion-icon
-              style="padding-left: 5px; font-size: small; color: black;"
-              name="star"
-            ></ion-icon>
-            <ion-label>
-              {{item.rating.average}}
-            </ion-label>
+
+          <ion-chip *ngIf="item.rating.average >= 5 && item.rating.average <7" class="listRating"
+            style="background-color: rgb(255, 242, 62) !important;" mode="ios">
+            <div>★★★☆☆
+              {{item.rating.average}} </div>
           </ion-chip>
-        </div>
-        <div *ngIf="item.rating.average >= 8">
-          <ion-chip
-            class="listRating"
-            style="background-color: rgb(58, 255, 84);"
-            mode="ios"
-          >
-            <ion-icon
-              style="padding-left: 5px; font-size: small; color: black;"
-              fill="clear"
-              name="star"
-            ></ion-icon>
-            <ion-label>
-              {{item.rating.average}}
-            </ion-label>
+
+          <ion-chip *ngIf="item.rating.average >= 7 && item.rating.average <9" class="listRating"
+            style="background-color: rgb(62, 255, 88) !important;" mode="ios">
+            <div>★★★★☆
+              {{item.rating.average}} </div>
           </ion-chip>
-        </div>
-        <div>
-          <ion-chip (onclick)="bookmark()" class="bookmarkChip" mode="ios">
-            <ion-icon
-              style="margin: 0; color: #ff5f5f;"
-              name="bookmark"
-            ></ion-icon>
+
+          <ion-chip *ngIf="item.rating.average >= 9" class="listRating"
+            style="background-color: rgb(62, 255, 88) !important;" mode="ios">
+            <div>★★★★☆ {{item.rating.average}} </div>
           </ion-chip>
         </div>
 
-        <!-- <div *ngIf="item.rating.average !=null" class="listRating">
-          ★ {{item.rating.average}}
-        </div> -->
-        <!-- <div class="listSubtitle">{{item.genres}}</div> -->
       </div>
     </ion-item>
   </ion-list>

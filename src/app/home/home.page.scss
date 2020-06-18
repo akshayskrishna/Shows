@@ -34,67 +34,71 @@ h3 {
   font-size: small;
 }
 
-.rating {
-  color: #d1cea0;
-  font-size: small;
-  font-weight: bold;
-}
-
-.run {
-  color: #9aff57;
-  font-style: italic;
-  font-weight: bold;
-  padding-top: 5px;
-  font-size: small;
-}
-
-.ended {
-  color: #ff5757;
-  font-style: italic;
-  font-weight: bold;
-  padding-top: 5px;
-  font-size: small;
-}
-.inDev {
-  color: #f4ff61;
-  font-style: italic;
-  font-weight: bold;
-  padding-top: 5px;
-  font-size: small;
-}
-
-.otherStatus {
-  color: #929292;
-  font-style: italic;
-  font-weight: bold;
-  padding-top: 5px;
-  font-size: small;
-}
-
-.pageHeadings {
-  font-size: large;
-  font-weight: bold;
-  width: 100%;
-  height: 50px;
-  background-color: rgb(24, 24, 24);
-  padding-top: 15px;
+.catchUpLogo{
+  width: 200px;
   padding-left: 15px;
-  padding-bottom: 15px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
-.randomCardImage {
-  width: 300px;
-  height: 200px;
-  z-index: -1;
-  max-height: 200px;
-  min-height: 200px;
+.searchIcon{
+width: 35px;
+height: 35px;
+padding-right: 15px;
+padding-bottom: 10px;
 }
 
-.randomCardTitle {
-  color: #ffffff;
+.sectionHeading{
+  padding: 20px 0px 40px 25px; 
+  font-size: x-large; 
+  font-weight: bold;
+}
+
+
+
+/* 
+*********************************************************************************
+---------------------------------------------------------------------------------
+Random Suggestions CSS Part
+---------------------------------------------------------------------------------
+*********************************************************************************
+*/
+
+.randomSuggestionTitle{
+  text-align: left; 
+  padding: 0px 0px 0px 15px; 
+  color: yellow;
+}
+
+.randomTitle{
+  text-align: left; 
+  padding: 10px 10px 0px 15px; 
+  font-size: medium; 
+  font-weight: bold;
+}
+
+.randomImage{
+  width: 270px; 
+  height: 370px; 
+  border-radius: 20px;
+}
+
+.randomLanguage{
+  text-align: left; 
+  padding: 0px 0px 15px 15px; 
+  font-style: italic; 
+  color: rgb(83, 83, 83); 
   font-size: small;
-  z-index: 2;
 }
+
+
+/*
+****************************************************************************
+----------------------------------------------------------------------------
+Genre Section
+----------------------------------------------------------------------------
+****************************************************************************
+*/
 
 .genreSlides {
   padding-top: 25px;
@@ -143,15 +147,15 @@ h3 {
   height: 200px;
 }
 
-.listBg {
-  position: absolute;
-  width: 100%;
-  top: 40px;
-  height: 200px;
-  right: 10px;
-  background-color: #1a1a1a;
-  border-radius: 5px;
-}
+
+/*
+****************************************************************************
+----------------------------------------------------------------------------
+Top Rated Lists
+----------------------------------------------------------------------------
+****************************************************************************
+*/
+
 
 .listImg {
   position: absolute;
@@ -174,7 +178,7 @@ h3 {
   font-size: medium;
 }
 
-.listChip {
+.listLanguage {
   position: absolute;
   left: 190px;
   top: 100px;
@@ -192,13 +196,4 @@ h3 {
   font-weight: normal;
 }
 
-.bookmarkChip {
-  position: absolute;
-  left: 265px;
-  top: 140px;
-  background-color: rgb(24, 24, 24);
-}
 
-.my-custom-menu {
-  --width: 500px;
-}
